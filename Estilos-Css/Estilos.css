@@ -1,0 +1,1045 @@
+:root {
+    --color-principal: #791e40;
+    --color-secundario: #a52b55;
+    --color-texto: #333333;
+    --color-claro: #ffffff;
+    --color-fondo: #f5f5f5;
+    --color-dorado: #b78b40;
+    --fuente-principal: 'Arial', sans-serif;
+    --espaciado: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+/* Estilos para la selección de métodos de pago en productos */
+.metodos-pago {
+    padding: 0 15px 15px;
+  }
+  
+  .metodos-pago label {
+    font-size: 0.9rem;
+    margin-right: 5px;
+  }
+  
+  .metodos-pago select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+  }
+  
+  /* Estilos para la sección de Comentarios */
+  .comentarios {
+    padding: 60px 0;
+    background-color: var(--color-fondo);
+  }
+  
+  .comentarios h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--color-principal);
+  }
+  
+  .comentarios-formulario {
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    text-align: center;
+  }
+  
+  .estrellas {
+    font-size: 2rem;
+    color: #ccc;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .estrellas .seleccionada {
+    color: var(--color-dorado);
+  }
+  
+  .comentarios-formulario textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    resize: vertical;
+  }
+  
+  .lista-comentarios {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .comentario-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .comentario-item .calificacion {
+    color: var(--color-dorado);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .comentario-item p {
+    font-size: 1rem;
+    color: var(--color-texto);
+  }
+  
+  
+  /* Dar un poco más de separación y estilo a la información de contacto */
+  .contacto-info a {
+    margin-right: 25px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+  
+  .contacto-info a:hover {
+    opacity: 0.8;
+  }
+
+/* Contenedor global */
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: var(--espaciado);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* Barra superior */
+.barra-superior {
+    
+    background-color: #fff;
+    color:var(--color-principal);
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.barra-superior .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Dar un poco más de separación y estilo a la información de contacto */
+.contacto-info a {
+    margin-right: 25px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.contacto-info a:hover {
+    opacity: 0.8;
+}
+
+/* Redes Sociales */
+.redes-sociales a {
+    margin-left: 15px;
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.redes-sociales i {
+    font-size: 16px;
+}
+
+/* Encabezado */
+.encabezado {
+    background-color: var(--color-principal);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.encabezado .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.buscador {
+    flex-grow: 1;
+    margin: 0 30px;
+}
+
+.buscador form {
+    position: relative;
+    display: flex;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    font-size: 16px;
+}
+
+.btn-cerrar {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    font-size: 20px;
+    color: #999;
+}
+
+.navegacion ul {
+    display: flex;
+}
+
+.navegacion li {
+    margin-left: 30px;
+}
+
+.navegacion a {
+    color: var(--color-claro);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.navegacion a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-dorado);
+}
+
+.carrito i {
+    color: var(--color-claro);
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+/* Sección Hero con imagen de fondo*/
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('mochilas-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    color: var(--color-claro);
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-principal {
+    display: inline-block;
+    background-color: var(--color-dorado);
+    color: var(--color-claro);
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-principal:hover {
+    background-color: #9e7834;
+    transform: translateY(-3px);
+}
+
+/* Productos destacados */
+.destacados {
+    padding: 80px 0;
+    background-color: var(--color-fondo);
+}
+
+.destacados h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: var(--color-principal);
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.producto {
+    background-color: var(--color-claro);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.producto:hover {
+    transform: translateY(-10px);
+}
+
+.producto img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.producto h3 {
+    font-size: 1.2rem;
+    padding: 15px 15px 5px;
+}
+
+.producto p {
+    font-weight: 600;
+    color: var(--color-secundario);
+    padding: 0 15px 15px;
+}
+
+.btn-secundario {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secundario:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Nuestra Historia */
+.nuestra-historia {
+    padding: 80px 0;
+}
+
+.nuestra-historia .contenedor {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.historia-contenido {
+    flex: 1;
+}
+
+.historia-contenido h2 {
+    color: var(--color-principal);
+    font-size: 2.5rem;
+}
+
+.historia-contenido p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.historia-imagen {
+    flex: 1;
+}
+
+.historia-imagen img {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Beneficios */
+.beneficios {
+    background-color: var(--color-fondo);
+    padding: 60px 0;
+}
+
+.beneficios .contenedor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.beneficio i {
+    font-size: 3rem;
+    color: var(--color-dorado);
+    margin-bottom: 20px;
+}
+
+.beneficio h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--color-principal);
+}
+
+/* Sección de Contacto */
+.contacto {
+    padding: 80px 0;
+    background-color: var(--color-claro);
+    position: relative;
+}
+
+.contacto h2 {
+    color: var(--color-principal);  
+    text-align: center;             
+    font-size: 2.5rem;              
+    margin-bottom: 30px;            
+    letter-spacing: 1px;            
+  }
+  
+
+.contacto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('mochilas-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+/*  contenedor del formulario de contacto para que sea visible */
+.contacto-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.contacto-imagen {
+    flex: 1;
+}
+
+.contacto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Estilos para el formulario de contacto */
+
+.formulario-contacto {
+    flex: 1;
+    padding: 40px;
+    background-color: #fff;  
+    color: #000;             
+    transform: scale(1);
+    opacity: 1;
+    transition: none;
+}
+
+/*  estilo  para los campos del formulario */
+.campo-formulario {
+    margin-bottom: 20px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #000;
+}
+
+.campo-formulario input,
+.campo-formulario textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: var(--fuente-principal);
+    font-size: 16px;
+    color: #000;
+    background-color: #fff;
+}
+
+/* Ajustar el área del textarea */
+.campo-formulario textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Botón de envío */
+.btn-enviar {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Pie de página */
+.pie-pagina {
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    padding: 60px 0 20px;
+}
+
+.columnas-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.columna-footer h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--color-dorado);
+}
+
+.columna-footer ul li {
+    margin-bottom: 10px;
+}
+
+.columna-footer a:hover {
+    color: var(--color-dorado);
+}
+
+.logo-footer img {
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.redes-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.redes-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.redes-footer a:hover {
+    background-color: var(--color-dorado);
+}
+
+.derechos {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .navegacion li {
+        margin-left: 15px;
+    }
+    
+    .nuestra-historia .contenedor {
+        flex-direction: column;
+    }
+    
+    .historia-contenido, .historia-imagen {
+        flex: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .encabezado .contenedor {
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        order: 1;
+        flex-basis: 50%;
+    }
+    
+    .carrito {
+        order: 2;
+        flex-basis: 50%;
+        text-align: right;
+    }
+    
+    .buscador {
+        order: 3;
+        flex-basis: 100%;
+        margin: 15px 0;
+    }
+    
+    .navegacion {
+        order: 4;
+        flex-basis: 100%;
+    }
+    
+    .navegacion ul {
+        justify-content: space-between;
+    }
+    
+    .navegacion li {
+        margin: 0;
+    }
+    
+    .contacto-wrapper {
+        flex-direction: column;
+    }
+    
+    .contacto-imagen {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .navegacion ul {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .navegacion li {
+        flex-basis: 45%;
+        text-align: center;
+    }
+    
+    .columnas-footer {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------------------------------------------------------------- */
+/* Animaciones para el e-commerce */
+
+.producto {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.producto.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.producto:nth-child(1) { transition-delay: 0.1s; }
+.producto:nth-child(2) { transition-delay: 0.2s; }
+.producto:nth-child(3) { transition-delay: 0.3s; }
+.producto:nth-child(4) { transition-delay: 0.4s; }
+
+/* Animación para beneficios */
+.beneficio {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.beneficio.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.beneficio:nth-child(1) { transition-delay: 0.1s; }
+.beneficio:nth-child(2) { transition-delay: 0.2s; }
+.beneficio:nth-child(3) { transition-delay: 0.3s; }
+.beneficio:nth-child(4) { transition-delay: 0.4s; }
+
+/* Animación para la sección de historia */
+.historia-contenido, .historia-imagen {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.historia-contenido {
+    transform: translateX(-30px);
+}
+
+.historia-imagen {
+    transform: translateX(30px);
+}
+
+.historia-contenido.visible, .historia-imagen.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Efecto hover para los enlaces */
+.navegacion a, .columna-footer a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navegacion a::after, .columna-footer a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-dorado);
+    transition: width 0.3s ease;
+}
+
+.navegacion a:hover::after, .columna-footer a:hover::after {
+    width: 100%;
+}
+
+/* Animación del botón principal */
+.btn-principal, .btn-secundario, .btn-enviar {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-principal::before, .btn-secundario::before, .btn-enviar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn-principal:hover::before, .btn-secundario:hover::before, .btn-enviar:hover::before {
+    left: 100%;
+}
+
+/* Animación para el logo */
+.logo img {
+    transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+}
+
+/* Animación para las imágenes de productos al hacer hover */
+.producto img {
+    transition: transform 0.5s ease;
+}
+
+.producto:hover img {
+    transform: scale(1.05);
+}
+
+/* Animación para el loader */
+.loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader.active {
+    display: flex;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(121, 30, 64, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-principal);
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animación para mensajes de notificación */
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Animación para el botón de scroll hacia arriba */
+.btn-scroll-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+    z-index: 99;
+}
+
+.btn-scroll-arriba.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-scroll-arriba:hover {
+    background-color: var(--color-secundario);
+}
+
+
+
+/* Sección Hero con imagen de fondo de mochilas */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('mochilas-hero.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    color: var(--color-claro);
+    text-align: center;
+    position: relative;
+}
+
+/* Sección de Contacto con fondo de mochilas */
+.contacto {
+    padding: 80px 0;
+    background-color: var(--color-claro);
+    position: relative;
+}
+
+.contacto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('mochilas-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+/* Fondo general de la página */
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+    background: url('patron-mochilas.png');
+    background-repeat: repeat;
+    background-size: 200px;
+    background-attachment: fixed;
+    background-color: var(--color-fondo);
+}
+
+/* Secciones con fondo blanco para mejor legibilidad */
+.destacados, .nuestra-historia, .beneficios, .contacto {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Hero alternativo con mochilas colgando como en la imagen */
+.hero-alt {
+    position: relative;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-alt::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+    z-index: 1;
+}
+
+.hero-alt video,
+.hero-alt img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-alt .contenido {
+    position: relative;
+    z-index: 2;
+    color: var(--color-claro);
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-alt h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-alt p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+/* Estilos para las mochilas flotantes en el hero */
+.mochilas-flotantes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.mochila-flotante {
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mochila-1 {
+    top: 10%;
+    left: 10%;
+    background-image: url('mochila-flotante-1.png');
+}
+
+.mochila-2 {
+    top: 15%;
+    right: 15%;
+    background-image: url('mochila-flotante-2.png');
+}
+
+.mochila-3 {
+    bottom: 20%;
+    left: 20%;
+    background-image: url('mochila-flotante-3.png');
+}
+
+.mochila-4 {
+    bottom: 25%;
+    right: 25%;
+    background-image: url('mochila-flotante-4.png');
+}
+
+/* Fondos de sección alternos para crear profundidad */
+section:nth-child(even) {
+    background-color: rgba(250, 250, 250, 0.95);
+}
+
+section:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Overlay para el formulario de contacto */
+.contacto-wrapper {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
