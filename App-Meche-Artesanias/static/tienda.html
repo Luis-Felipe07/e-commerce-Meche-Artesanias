@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mech Artesanal - Tienda</title>
+  <!-- En esta parte incluyo la hoja de estilos específica para la página de tienda -->
+  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/Estilos-Tienda.css">
+  <!-- Incluyo Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Barra superior con información de contacto y redes sociales -->
+  <div class="barra-superior">
+    <div class="contenedor">
+      <div class="contacto-info">
+        <!-- En este enlace muestro el teléfono -->
+        <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
+        <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
+      </div>
+      <div class="redes-sociales">
+        <!-- Enlace a  redes sociales -->
+        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="index-login.html" target="_blank"><i class="fas fa-user"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Encabezado con logo, buscador y navegación -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <div class="logo">
+        <a href="index-pgbienvenida.html">
+          <img src="/App-Meche-Artesanias/static/Img/logo.jpeg" alt="Mech Artesanal Logo">
+        </a>
+      </div>
+      
+      <div class="buscador">
+        <form action="#" method="get">
+          <!-- En este input permito que el usuario busque productos -->
+          <input type="text" placeholder="Buscar">
+          <button type="button" id="cerrarBusqueda" class="btn-cerrar">&times;</button>
+        </form>
+      </div>
+      
+      <nav class="navegacion">
+        <ul>
+          <li><a href="index-pgbienvenida.html">Inicio</a></li>
+          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="nosotros.html">¿Quiénes Somos?</a></li>
+          <li><a href="index-pgbienvenida.html">Contáctanos</a></li>
+        </ul>
+      </nav>
+      
+      <div class="carrito">
+        <a href="carrito.html">
+          <i class="fas fa-shopping-cart"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sección principal de la tienda -->
+  <main class="tienda">
+    <div class="contenedor">
+      <h1>Nuestra Tienda</h1>
+      <p>Descubre nuestra colección completa de mochilas artesanales.</p>
+
+      <!-- --- SECCIÓN: Mochilas de Fique --- -->
+      <h2>Mochilas de Fique</h2>
+      <section class="productos-grid">
+        <!-- Producto 1 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-fique1.jpg" alt="Mochila Fique 1">
+          <h3>Mochila Fique 1</h3>
+          <p>$33.000</p>
+          <div class="metodos-pago">
+            <label for="pago-1">Método de pago:</label>
+            <select id="pago-1">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 2 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-fique2.jpg" alt="Mochila Fique 2">
+          <h3>Mochila Fique 2</h3>
+          <p>$44.000</p>
+          <div class="metodos-pago">
+            <label for="pago-2">Método de pago:</label>
+            <select id="pago-2">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 3 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-md1.jpg" alt="Mochila MD 1">
+          <h3>Mochila MD 1</h3>
+          <p>$52.000</p>
+          <div class="metodos-pago">
+            <label for="pago-3">Método de pago:</label>
+            <select id="pago-3">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 4 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-md2.jpg" alt="Mochila MD 2">
+          <h3>Mochila MD 2</h3>
+          <p>$55.000</p>
+          <div class="metodos-pago">
+            <label for="pago-4">Método de pago:</label>
+            <select id="pago-4">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 5 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-md3.jpg" alt="Mochila MD 3">
+          <h3>Mochila MD 3</h3>
+          <p>$47.000</p>
+          <div class="metodos-pago">
+            <label for="pago-5">Método de pago:</label>
+            <select id="pago-5">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 6 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-mini1.jpg" alt="Mochila Mini 1">
+          <h3>Mochila Mini 1</h3>
+          <p>$25.000</p>
+          <div class="metodos-pago">
+            <label for="pago-6">Método de pago:</label>
+            <select id="pago-6">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 7 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq1.jpg" alt="Mochila PQ 1">
+          <h3>Mochila PQ 1</h3>
+          <p>$30.000</p>
+          <div class="metodos-pago">
+            <label for="pago-7">Método de pago:</label>
+            <select id="pago-7">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 8 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq2.jpg" alt="Mochila PQ 2">
+          <h3>Mochila PQ 2</h3>
+          <p>$60.000</p>
+          <div class="metodos-pago">
+            <label for="pago-8">Método de pago:</label>
+            <select id="pago-8">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 9 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq3.jpg" alt="Mochila PQ 3">
+          <h3>Mochila PQ 3</h3>
+          <p>$45.000</p>
+          <div class="metodos-pago">
+            <label for="pago-9">Método de pago:</label>
+            <select id="pago-9">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 10 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq4.jpg" alt="Mochila PQ 4">
+          <h3>Mochila PQ 4</h3>
+          <p>$50.000</p>
+          <div class="metodos-pago">
+            <label for="pago-10">Método de pago:</label>
+            <select id="pago-10">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 11 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq5.jpg" alt="Mochila PQ 5">
+          <h3>Mochila PQ 5</h3>
+          <p>$--.---</p>
+          <div class="metodos-pago">
+            <label for="pago-11">Método de pago:</label>
+            <select id="pago-11">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+        <!-- Producto 12 -->
+        <div class="producto">
+          <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-pq6.jpg" alt="Mochila PQ 6">
+          <h3>Mochila PQ 6</h3>
+          <p>$--.---</p>
+          <div class="metodos-pago">
+            <label for="pago-12">Método de pago:</label>
+            <select id="pago-12">
+              <option value="">-- Seleccione --</option>
+              <option value="nequi">Nequi</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="davivienda">Davivienda</option>
+              <option value="pse">PSE</option>
+            </select>
+          </div>
+          <button class="btn-secundario">Agregar al carrito</button>
+        </div>
+      </section>
+
+      <!-- --- SECCIÓN: Mochilas de Lana (vacía por ahora) --- -->
+      <h2>Mochilas de Lana</h2>
+      <section class="productos-grid">
+        <!-- Aquí se agregaran las mochilas de lana -->
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Pie de página similar al del index -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <div class="columnas-footer">
+        <div class="columna-footer logo-footer">
+          <img src="/App-Meche-Artesanias/static/Img/logo.jpeg" alt="Mech Artesanal Logo">
+          <div class="redes-footer">
+            <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>¿QUIÉNES SOMOS?</h3>
+          <ul>
+            <li><a href="#">Misión</a></li>
+            <li><a href="#">Visión</a></li>
+            <li><a href="#">Materiales</a></li>
+            <li><a href="#">Nuestra cultura</a></li>
+          </ul>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>NUESTRAS MOCHILAS</h3>
+          <ul>
+            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="#">Productos Destacados</a></li>
+            <li><a href="#">¿Cómo Cuidar una Mochila?</a></li>
+            <li><a href="#">Política Ambiental</a></li>
+          </ul>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>CONTÁCTANOS</h3>
+          <ul>
+            <li><a href="https://www.instagram.com/meche_artesanias/" target="_blank">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="derechos">
+        <p>&copy; 2025 Mech Artesanal. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Incluyo el archivo JS propio para la tienda -->
+  <script src="/App-Meche-Artesanias/static/Archivos-Js/tienda.js"></script>
+</body>
+</html>

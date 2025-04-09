@@ -1,0 +1,576 @@
+/* En esta parte defino las variables globales que usaré en la tienda */
+:root {
+    --color-principal: #791e40;
+    --color-secundario: #a52b55;
+    --color-texto: #333333;
+    --color-claro: #ffffff;
+    --color-fondo: #f5f5f5;
+    --color-dorado: #b78b40;
+    --color-dorado-claro: #d4af6a;
+    --fuente-principal: 'Arial', sans-serif;
+    --espaciado: 20px;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --sombra-media: 0 6px 18px rgba(0, 0, 0, 0.12);
+    --transicion: all 0.3s ease;
+}
+
+/* Reinicio de márgenes y padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+/* Estilos para enlaces generales */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transicion);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Contenedor principal de la página */
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* --- Estilos Generales para Barra Superior, Encabezado y Pie de Página --- */
+
+/* Barra superior */
+.barra-superior {
+    background-color: var(--color-claro);
+    color: var(--color-principal);
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.barra-superior .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contacto-info a {
+    margin-right: 25px;
+    font-weight: 500;
+    transition: var(--transicion);
+}
+
+.contacto-info a:hover {
+    color: var(--color-secundario);
+    opacity: 0.8;
+}
+
+.contacto-info i {
+    margin-right: 5px;
+}
+
+.redes-sociales a {
+    margin-left: 15px;
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(121, 30, 64, 0.1);
+    border-radius: 50%;
+    transition: var(--transicion);
+}
+
+.redes-sociales a:hover {
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    transform: scale(1.1);
+}
+
+/* Encabezado */
+.encabezado {
+    background-color: var(--color-principal);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sombra-media);
+}
+
+.encabezado .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+    border-radius: 8px;
+    transition: var(--transicion);
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+    box-shadow: var(--sombra-suave);
+}
+
+.buscador {
+    flex-grow: 1;
+    margin: 0 30px;
+    position: relative;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 12px 40px 12px 20px;
+    border-radius: 25px;
+    border: none;
+    font-size: 16px;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+}
+
+.buscador input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-dorado);
+}
+
+.buscador::after {
+    content: '\f002';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-principal);
+    opacity: 0.7;
+}
+
+.btn-cerrar {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    display: none;
+    transition: var(--transicion);
+}
+
+.btn-cerrar:hover {
+    color: var(--color-principal);
+}
+
+.navegacion ul {
+    display: flex;
+}
+
+.navegacion li {
+    margin-left: 30px;
+}
+
+.navegacion a {
+    color: var(--color-claro);
+    font-weight: 500;
+    padding: 8px 0;
+    position: relative;
+    transition: var(--transicion);
+}
+
+.navegacion a:hover {
+    color: var(--color-dorado);
+}
+
+.navegacion a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-dorado);
+    transition: var(--transicion);
+}
+
+.navegacion a:hover::after {
+    width: 100%;
+}
+
+.carrito a {
+    color: var(--color-claro);
+    font-size: 24px;
+    margin-left: 20px;
+    position: relative;
+    transition: var(--transicion);
+}
+
+.carrito a:hover {
+    color: var(--color-dorado);
+    transform: scale(1.1);
+}
+
+/* Pie de Página */
+.pie-pagina {
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    padding: 60px 0 20px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.columnas-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--espaciado);
+    margin-bottom: 40px;
+}
+
+.columna-footer h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--color-dorado);
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.columna-footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--color-dorado);
+}
+
+.columna-footer ul li {
+    margin-bottom: 12px;
+}
+
+.columna-footer a {
+    color: var(--color-claro);
+    opacity: 0.8;
+    transition: var(--transicion);
+}
+
+.columna-footer a:hover {
+    color: var(--color-dorado);
+    opacity: 1;
+    padding-left: 5px;
+}
+
+.logo-footer img {
+    height: 80px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra-suave);
+}
+
+.redes-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.redes-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: var(--transicion);
+}
+
+.redes-footer a:hover {
+    background-color: var(--color-dorado);
+    transform: translateY(-3px);
+}
+
+.derechos {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* --- Estilos Específicos para la Página de Tienda --- */
+
+/* Sección principal tienda */
+.tienda {
+    padding: 60px 0;
+    background-color: var(--color-claro);
+}
+
+.tienda h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: var(--espaciado);
+    color: var(--color-principal);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.tienda h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--color-dorado);
+}
+
+.tienda p {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Diseño de la grilla de productos */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Estilos para cada producto */
+.producto {
+    background-color: var(--color-claro);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion);
+    position: relative;
+    padding-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.producto:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--sombra-media);
+}
+
+.producto img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: var(--transicion);
+}
+
+.producto:hover img {
+    transform: scale(1.05);
+}
+
+.producto h3 {
+    padding: 15px 15px 5px;
+    font-size: 1.3rem;
+    color: var(--color-principal);
+}
+
+.producto p {
+    padding: 0 15px 15px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--color-secundario);
+    margin-bottom: 0;
+}
+
+/* Estilos para el contenedor de métodos de pago */
+.metodos-pago {
+    padding: 5px 15px 15px;
+    margin-bottom: 5px;
+}
+
+.metodos-pago label {
+    font-size: 0.9rem;
+    margin-right: 5px;
+    color: var(--color-texto);
+    font-weight: 500;
+}
+
+.metodos-pago select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    width: 100%;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: var(--transicion);
+}
+
+.metodos-pago select:focus {
+    outline: none;
+    border-color: var(--color-dorado);
+    box-shadow: 0 0 0 2px rgba(183, 139, 64, 0.2);
+}
+
+/* Botón "Agregar al carrito" */
+.btn-secundario {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 0 15px;
+    padding: 12px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transicion);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.btn-secundario:hover {
+    background-color: var(--color-secundario);
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-suave);
+}
+
+.btn-secundario:active {
+    transform: translateY(0);
+}
+
+/* Añadiendo una etiqueta decorativa a los productos */
+.producto::before {
+    content: '✨ Artesanal';
+    position: absolute;
+    top: 15px;
+    right: 0;
+    background-color: var(--color-dorado);
+    color: var(--color-claro);
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    border-radius: 4px 0 0 4px;
+    font-weight: bold;
+    box-shadow: var(--sombra-suave);
+}
+
+/* Estilos responsivos */
+@media (max-width: 968px) {
+    .productos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    
+    .tienda h1 {
+        font-size: 2.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .productos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    /* Ajuste para la navegación en móviles */
+    .encabezado .contenedor {
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        order: 1;
+        flex-basis: 50%;
+    }
+    
+    .carrito {
+        order: 2;
+        flex-basis: 50%;
+        text-align: right;
+    }
+    
+    .buscador {
+        order: 3;
+        flex-basis: 100%;
+        margin: 15px 0;
+    }
+    
+    .navegacion {
+        order: 4;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+    
+    .navegacion ul {
+        justify-content: space-between;
+        padding: 10px 0;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .navegacion li {
+        margin-left: 15px;
+    }
+    
+    .navegacion li:first-child {
+        margin-left: 0;
+    }
+    
+    .tienda h1 {
+        font-size: 2rem;
+    }
+    
+    .producto::before {
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .productos-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .producto img {
+        height: 280px;
+    }
+
+    .columnas-footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .columna-footer h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .columna-footer a:hover {
+        padding-left: 0;
+    }
+    
+    .redes-footer {
+        justify-content: center;
+    }
+}
