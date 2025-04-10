@@ -13,6 +13,6 @@ El sistema cuenta con un **panel administrativo completo** desarrollado con Djan
 
 A continuación se muestra una vista real del panel de administración personalizado:
 
-![Panel Admin](imagenes/panel_admin.png)
+![Panel Admin](image.png)
 
 > *Nota:* Este panel solo es accesible para los administradores del sitio.
