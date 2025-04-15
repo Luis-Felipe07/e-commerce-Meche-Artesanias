@@ -1,0 +1,617 @@
+:root {
+    --color-principal: #791e40;
+    --color-secundario: #a52b55;
+    --color-texto: #333333;
+    --color-claro: #ffffff;
+    --color-fondo: #f5f5f5;
+    --color-dorado: #b78b40;
+    --fuente-principal: 'Arial', sans-serif;
+    --espaciado: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+  
+ 
+/* Contenedor global */
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: var(--espaciado);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* Barra superior */
+.barra-superior {
+    /* Fondo plano blanco */
+    background-color: #fff;
+    color:var(--color-principal);
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.barra-superior .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Redes Sociales: botones modernos */
+.redes-sociales a {
+    margin-left: 15px;
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.redes-sociales a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.redes-sociales i {
+    font-size: 16px;
+}
+
+/* Encabezado */
+.encabezado {
+    background-color: var(--color-principal);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.encabezado .contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.buscador {
+    flex-grow: 1;
+    margin: 0 30px;
+}
+
+.buscador form {
+    position: relative;
+    display: flex;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: none;
+    font-size: 16px;
+}
+
+.btn-cerrar {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    font-size: 20px;
+    color: #999;
+}
+
+.navegacion ul {
+    display: flex;
+}
+
+.navegacion li {
+    margin-left: 30px;
+}
+
+.navegacion a {
+    color: var(--color-claro);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.navegacion a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-dorado);
+}
+
+.carrito i {
+    color: var(--color-claro);
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+
+/* Nuestra Historia */
+.nuestra-historia {
+    padding: 80px 0;
+}
+
+.nuestra-historia .contenedor {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.historia-contenido {
+    flex: 1;
+}
+
+.historia-contenido h2 {
+    color: var(--color-principal);
+    font-size: 2.5rem;
+}
+
+.historia-contenido p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+    text-align: justify
+    ;
+}
+
+.historia-imagen {
+    flex: 1;
+}
+
+.historia-imagen img {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Sección Misión y Visión */
+
+/* Contenedor principal para misión y visión */
+.contenedor-mision-vision {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    gap: 20px; 
+    width: 100%; 
+    position: relative; 
+}
+
+/* Línea divisoria vertical */
+.linea-divisoria {
+    width: 4px; 
+    height: 450px; 
+    background-color: #b78b40; 
+    align-self: center;
+    margin: 0; 
+}
+
+.nuestra-mision, .nuestra-vision {
+    display: inline-block; 
+    vertical-align: top; 
+    width: 45%; 
+    margin: 2%; 
+    box-sizing: border-box; 
+}
+
+.nuestra-mision p, .nuestra-vision p {
+    text-align: justify;
+    color: #333333;
+    margin-top: 20px;
+}
+
+.nuestra-mision h2, .nuestra-vision h2 {
+    color: #791e40;
+    font-size: 30px;
+}
+
+.mision-contenido img, .vision-contenido img {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-mision, .imagen-vision {
+    display: block; 
+    margin: 10px auto; 
+    max-width: 100%; 
+    height: auto; 
+    flex: 1;
+}
+
+
+/* Objetivos Institucionales */
+
+.objetivos-institucionales {
+    background-color: var(--color-fondo); 
+    padding: 60px 0; 
+}
+
+.objetivos-institucionales .contenedor {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 30px; 
+    text-align: center; 
+}
+
+.objetivo i {
+    font-size: 3rem; 
+    color: var(--color-dorado); 
+    margin-bottom: 20px; 
+}
+
+.objetivos-institucionales h2 {
+    text-align: center;
+    color: #791e40;
+    font-size: 30px;
+    margin-bottom: 40px;
+}
+
+.objetivo h3 {
+    font-size: 1.3rem; 
+    margin-bottom: 10px; 
+    color: var(--color-principal);
+}
+
+.objetivo p {
+    font-size: 1rem; 
+    color: #333; 
+    text-align: justify;
+}
+
+
+/* Pie de página */
+.pie-pagina {
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    padding: 60px 0 20px;
+}
+
+.columnas-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.columna-footer h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--color-dorado);
+}
+
+.columna-footer ul li {
+    margin-bottom: 10px;
+}
+
+.columna-footer a:hover {
+    color: var(--color-dorado);
+}
+
+.logo-footer img {
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.redes-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.redes-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.redes-footer a:hover {
+    background-color: var(--color-dorado);
+}
+
+.derechos {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .navegacion li {
+        margin-left: 15px;
+    }
+    
+    .nuestra-historia .contenedor {
+        flex-direction: column;
+    }
+    
+    .historia-contenido, .historia-imagen {
+        flex: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .encabezado .contenedor {
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        order: 1;
+        flex-basis: 50%;
+    }
+    
+    .carrito {
+        order: 2;
+        flex-basis: 50%;
+        text-align: right;
+    }
+    
+    .buscador {
+        order: 3;
+        flex-basis: 100%;
+        margin: 15px 0;
+    }
+    
+    .navegacion {
+        order: 4;
+        flex-basis: 100%;
+    }
+    
+    .navegacion ul {
+        justify-content: space-between;
+    }
+    
+    .navegacion li {
+        margin: 0;
+    }
+    
+    .contacto-wrapper {
+        flex-direction: column;
+    }
+    
+    .contacto-imagen {
+        height: 300px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .navegacion ul {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .navegacion li {
+        flex-basis: 45%;
+        text-align: center;
+    }
+    
+    .columnas-footer {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Animación */
+.historia-contenido, .historia-imagen {
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.historia-contenido {
+    transform: translateX(-30px);
+}
+
+.historia-imagen {
+    transform: translateX(30px);
+}
+
+.historia-contenido.visible, .historia-imagen.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Efecto hover para los enlaces */
+.navegacion a, .columna-footer a {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navegacion a::after, .columna-footer a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-dorado);
+    transition: width 0.3s ease;
+}
+
+.navegacion a:hover::after, .columna-footer a:hover::after {
+    width: 100%;
+}
+
+/* Animación del botón principal */
+.btn-principal, .btn-secundario, .btn-enviar {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-principal::before, .btn-secundario::before, .btn-enviar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn-principal:hover::before, .btn-secundario:hover::before, .btn-enviar:hover::before {
+    left: 100%;
+}
+
+/* Animación para el logo */
+.logo img {
+    transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.05);
+}
+
+
+/* Animación para el loader */
+.loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader.active {
+    display: flex;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(121, 30, 64, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-principal);
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animación para mensajes de notificación */
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Animación para el botón de scroll hacia arriba */
+.btn-scroll-arriba {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+    z-index: 99;
+}
+
+.btn-scroll-arriba.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.btn-scroll-arriba:hover {
+    background-color: var(--color-secundario);
+}
+
+/* ---------------------------------------------------------------- */
+/* Actualización para el fondo de la página */
+
+/* Fondo general de la página */
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+    background: url('patron-mochilas.png');
+    background-repeat: repeat;
+    background-size: 200px;
+    background-attachment: fixed;
+    background-color: var(--color-fondo);
+}
+
+/* Secciones con fondo blanco para mejor legibilidad */
+.nuestra-historia, .objetivos-institucionales {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+
