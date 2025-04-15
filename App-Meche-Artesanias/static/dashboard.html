@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mech Artesanal - Mi Cuenta</title>
+  <!-- Hojas de estilos -->
+  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/dashboard.css">
+  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/dashboard-2.css">
+  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/dashboard-spa.css">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Barra superior con la información de contacto y redes sociales -->
+  <div class="barra-superior">
+    <div class="contenedor">
+      <div class="contacto-info">
+        <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
+        <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
+      </div>
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="usuario-menu">
+          <a href="#" id="menuUsuario"><i class="fas fa-user-circle"></i> <span id="nombreUsuario"></span></a>
+          <div class="dropdown-menu">
+            <a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Mi Panel</a>
+            <a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Editar Perfil</a>
+            <a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a>
+            <a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a>
+            <a href="#" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Encabezado con logo, buscador y navegación -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <div class="logo">
+        <a href="index-pgbienvenida.html">
+          <img src="/App-Meche-Artesanias/static/Img/logo.jpeg" alt="Mech Artesanal Logo">
+        </a>
+      </div>
+      
+      <div class="buscador">
+        <form action="#" method="get">
+          <input type="text" placeholder="Buscar">
+          <button type="button" id="cerrarBusqueda" class="btn-cerrar">&times;</button>
+        </form>
+      </div>
+      
+      <nav class="navegacion">
+        <ul>
+          <li><a href="index-pgbienvenida.html">Inicio</a></li>
+          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="nosotros.html">¿Quiénes Somos?</a></li>
+          <li><a href="index-pgbienvenida.html">Contáctanos</a></li>
+        </ul>
+      </nav>
+      
+      <div class="carrito">
+        <a href="carrito.html">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="contador-carrito">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Panel principal del cliente -->
+  <main class="panel-cliente">
+    <div class="contenedor">
+      <div class="bienvenida-cliente">
+        <h1>Bienvenido/a, <span id="nombreClientePanel">Usuario</span></h1>
+        <p>Este es tu panel personal donde puedes administrar tus pedidos y datos.</p>
+      </div>
+
+      <!-- Sección de resumen y opciones rápidas -->
+      <div class="dashboard-cliente">
+        <!-- Panel lateral con menú de navegación -->
+        <aside class="menu-lateral">
+          <div class="foto-perfil">
+            <img id="imgPerfilUsuario" src="/App-Meche-Artesanias/static/Img/usuario-default.jpg" alt="Foto de perfil">
+            <h3 id="nombrePerfilUsuario">Usuario</h3>
+            <p id="emailUsuario">usuario@ejemplo.com</p>
+          </div>
+          <nav class="menu-cliente">
+            <ul>
+              <li class="activo"><a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Panel Principal</a></li>
+              <li><a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
+              <li><a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a></li>
+              <li><a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a></li>
+              <li><a href="#" id="cerrarSesionMenu"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- Contenido principal del dashboard -->
+        <div class="contenido-dashboard">
+          <!-- Sección de carga - aparece mientras se carga el contenido -->
+          <div id="cargando-seccion" class="oculto">
+            <div class="spinner-carga">
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
+            <p>Cargando contenido...</p>
+          </div>
+
+          <!-- Secciones de contenido -->
+          <div id="seccion-contenido">
+            <!-- Sección Dashboard (default) -->
+            <div id="seccion-dashboard" class="seccion-panel active">
+              <!-- Tarjetas de resumen -->
+              <div class="tarjetas-resumen">
+                <div class="tarjeta">
+                  <div class="icono-tarjeta">
+                    <i class="fas fa-shopping-bag"></i>
+                  </div>
+                  <div class="info-tarjeta">
+                    <h3>Pedidos</h3>
+                    <p id="totalPedidos">0</p>
+                    <a href="#pedidos" data-section="pedidos">Ver todos</a>
+                  </div>
+                </div>
+                <div class="tarjeta">
+                  <div class="icono-tarjeta">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="info-tarjeta">
+                    <h3>Direcciones</h3>
+                    <p id="totalDirecciones">0</p>
+                    <a href="#direcciones" data-section="direcciones">Administrar</a>
+                  </div>
+                </div>
+                <div class="tarjeta">
+                  <div class="icono-tarjeta">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <div class="info-tarjeta">
+                    <h3>Métodos de Pago</h3>
+                    <p id="totalMetodosPago">0</p>
+                    <a href="#pagos" data-section="pagos">Administrar</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Últimos pedidos -->
+              <div class="ultimos-pedidos">
+                <div class="encabezado-seccion">
+                  <h2>Últimos Pedidos</h2>
+                  <a href="#pedidos" data-section="pedidos" class="ver-todos">Ver todos</a>
+                </div>
+                <div class="tabla-responsive">
+                  <table class="tabla-pedidos">
+                    <thead>
+                      <tr>
+                        <th>#ID</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaPedidosRecientes">
+                      <tr>
+                        <td colspan="5" class="sin-datos">Cargando pedidos recientes...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Productos recomendados -->
+              <div class="productos-recomendados">
+                <div class="encabezado-seccion">
+                  <h2>Productos Recomendados</h2>
+                  <a href="tienda.html" class="ver-todos">Ver tienda</a>
+                </div>
+                <div class="recomendados-slider" id="productosRecomendados">
+                  <div class="recomendado-card">
+                    <img src="/App-Meche-Artesanias/static/Img/img-tienda/mochila-fique1.jpg" alt="Mochila Recomendada 1">
+                    <h3>Cargando productos...</h3>
+                    <p>$--.---</p>
+                    <button class="btn-secundario">Agregar al carrito</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección Mi Perfil -->
+            <div id="seccion-perfil" class="seccion-panel">
+              <div class="seccion-header">
+                <h2><i class="fas fa-user-edit"></i> Mi Perfil</h2>
+              </div>
+              <div class="seccion-contenido">
+                <div class="editar-perfil-form">
+                  <div class="perfil-foto-upload">
+                    <div class="foto-actual">
+                      <img id="perfilFotoActual" src="/App-Meche-Artesanias/static/Img/usuario-default.jpg" alt="Foto de perfil">
+                    </div>
+                    <div class="cambiar-foto">
+                      <button type="button" class="btn-cambiar-foto">Cambiar foto</button>
+                      <input type="file" id="inputFotoPerfil" accept="image/*" style="display: none;">
+                    </div>
+                  </div>
+                  <form id="formEditarPerfil">
+                    <div class="form-grupo">
+                      <label for="nombreCompleto">Nombre Completo</label>
+                      <input type="text" id="nombreCompleto" name="nombreCompleto" placeholder="Tu nombre completo">
+                    </div>
+                    <div class="form-grupo">
+                      <label for="emailPerfil">Correo Electrónico</label>
+                      <input type="email" id="emailPerfil" name="email" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-grupo">
+                      <label for="telefonoPerfil">Teléfono</label>
+                      <input type="tel" id="telefonoPerfil" name="telefono" placeholder="Número de teléfono">
+                    </div>
+                    <div class="form-grupo">
+                      <button type="submit" class="btn-primario">Guardar Cambios</button>
+                    </div>
+                  </form>
+                  <div class="cambiar-contrasena">
+                    <h3>Cambiar Contraseña</h3>
+                    <form id="formCambiarContrasena">
+                      <div class="form-grupo">
+                        <label for="contrasenaActual">Contraseña Actual</label>
+                        <input type="password" id="contrasenaActual" name="contrasenaActual">
+                      </div>
+                      <div class="form-grupo">
+                        <label for="nuevaContrasena">Nueva Contraseña</label>
+                        <input type="password" id="nuevaContrasena" name="nuevaContrasena">
+                      </div>
+                      <div class="form-grupo">
+                        <label for="confirmarContrasena">Confirmar Contraseña</label>
+                        <input type="password" id="confirmarContrasena" name="confirmarContrasena">
+                      </div>
+                      <div class="form-grupo">
+                        <button type="submit" class="btn-secundario">Cambiar Contraseña</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección Mis Pedidos -->
+            <div id="seccion-pedidos" class="seccion-panel">
+              <div class="seccion-header">
+                <h2><i class="fas fa-shopping-bag"></i> Mis Pedidos</h2>
+              </div>
+              <div class="seccion-contenido">
+                <div class="filtros-pedidos">
+                  <div class="campo-busqueda">
+                    <input type="text" id="buscarPedido" placeholder="Buscar por número de pedido">
+                    <button type="button"><i class="fas fa-search"></i></button>
+                  </div>
+                  <div class="selector-estado">
+                    <select id="filtroEstadoPedido">
+                      <option value="todos">Todos los estados</option>
+                      <option value="pendiente">Pendiente</option>
+                      <option value="enviado">Enviado</option>
+                      <option value="completado">Completado</option>
+                      <option value="cancelado">Cancelado</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="tabla-responsive">
+                  <table class="tabla-pedidos">
+                    <thead>
+                      <tr>
+                        <th>#ID</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaTodosPedidos">
+                      <tr>
+                        <td colspan="5" class="sin-datos">Cargando pedidos...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="paginacion">
+                  <button class="btn-pagina" id="paginaAnterior" disabled><i class="fas fa-chevron-left"></i></button>
+                  <span id="paginaActual">Página 1 de 1</span>
+                  <button class="btn-pagina" id="paginaSiguiente" disabled><i class="fas fa-chevron-right"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección Mis Direcciones -->
+            <div id="seccion-direcciones" class="seccion-panel">
+              <div class="seccion-header">
+                <h2><i class="fas fa-map-marker-alt"></i> Mis Direcciones</h2>
+                <button id="agregarDireccion" class="btn-primario"><i class="fas fa-plus"></i> Agregar Dirección</button>
+              </div>
+              <div class="seccion-contenido">
+                <div id="listaDirecciones" class="tarjetas-direcciones">
+                  <div class="cargando-datos">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando direcciones...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sección Métodos de Pago (adicional) -->
+            <div id="seccion-pagos" class="seccion-panel">
+              <div class="seccion-header">
+                <h2><i class="fas fa-credit-card"></i> Métodos de Pago</h2>
+                <button id="agregarMetodoPago" class="btn-primario"><i class="fas fa-plus"></i> Agregar Método de Pago</button>
+              </div>
+              <div class="seccion-contenido">
+                <div id="listaMetodosPago" class="tarjetas-pagos">
+                  <div class="cargando-datos">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando métodos de pago...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal para nueva dirección -->
+  <div id="modalDireccion" class="modal">
+    <div class="modal-contenido">
+      <div class="modal-header">
+        <h3>Agregar Nueva Dirección</h3>
+        <button type="button" class="cerrar-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="formDireccion">
+          <div class="form-grupo">
+            <label for="nombreDireccion">Nombre de la dirección</label>
+            <input type="text" id="nombreDireccion" name="nombre" placeholder="Ej. Casa, Trabajo, etc." required>
+          </div>
+          <div class="form-grupo">
+            <label for="calleDireccion">Dirección</label>
+            <input type="text" id="calleDireccion" name="calle" placeholder="Calle, número, colonia" required>
+          </div>
+          <div class="form-grupo doble">
+            <div>
+              <label for="ciudadDireccion">Ciudad</label>
+              <input type="text" id="ciudadDireccion" name="ciudad" required>
+            </div>
+            <div>
+              <label for="estadoDireccion">Departamento</label>
+              <input type="text" id="estadoDireccion" name="estado" required>
+            </div>
+          </div>
+          <div class="form-grupo doble">
+            <div>
+              <label for="cpDireccion">Código Postal</label>
+              <input type="text" id="cpDireccion" name="cp" required>
+            </div>
+            <div>
+              <label for="paisDireccion">País</label>
+              <input type="text" id="paisDireccion" name="pais" value="Colombia" required>
+            </div>
+          </div>
+          <div class="form-grupo">
+            <label for="telefonoDireccion">Teléfono de contacto</label>
+            <input type="tel" id="telefonoDireccion" name="telefono" required>
+          </div>
+          <div class="form-grupo">
+            <div class="checkbox-grupo">
+              <input type="checkbox" id="direccionPredeterminada" name="predeterminada">
+              <label for="direccionPredeterminada">Establecer como dirección predeterminada</label>
+            </div>
+          </div>
+          <div class="form-grupo">
+            <button type="submit" class="btn-primario">Guardar Dirección</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para nuevo método de pago -->
+  <div id="modalMetodoPago" class="modal">
+    <div class="modal-contenido">
+      <div class="modal-header">
+        <h3>Agregar Método de Pago</h3>
+        <button type="button" class="cerrar-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="formMetodoPago">
+          <div class="form-grupo">
+            <label for="tipoTarjeta">Tipo de Tarjeta</label>
+            <select id="tipoTarjeta" name="tipo" required>
+              <option value="">Seleccionar...</option>
+              <option value="visa">Visa</option>
+              <option value="mastercard">MasterCard</option>
+              <option value="american_express">American Express</option>
+            </select>
+          </div>
+          <div class="form-grupo">
+            <label for="numeroTarjeta">Número de Tarjeta</label>
+            <input type="text" id="numeroTarjeta" name="numero" placeholder="XXXX XXXX XXXX XXXX" required>
+          </div>
+          <div class="form-grupo doble">
+            <div>
+              <label for="mesExpiracion">Mes</label>
+              <select id="mesExpiracion" name="mes" required>
+                <option value="">MM</option>
+                <option value="01">01</option>
+                <!-- Más opciones aquí -->
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div>
+              <label for="anoExpiracion">Año</label>
+              <select id="anoExpiracion" name="ano" required>
+                <option value="">AAAA</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <!-- Más opciones aquí -->
+                <option value="2035">2035</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grupo">
+            <label for="nombreTarjeta">Nombre en la Tarjeta</label>
+            <input type="text" id="nombreTarjeta" name="nombre" required>
+          </div>
+          <div class="form-grupo">
+            <div class="checkbox-grupo">
+              <input type="checkbox" id="tarjetaPredeterminada" name="predeterminada">
+              <label for="tarjetaPredeterminada">Establecer como método de pago predeterminado</label>
+            </div>
+          </div>
+          <div class="form-grupo">
+            <button type="submit" class="btn-primario">Guardar Método de Pago</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para ver detalle de pedido -->
+  <div id="modalDetallePedido" class="modal">
+    <div class="modal-contenido modal-grande">
+      <div class="modal-header">
+        <h3>Detalle de Pedido #<span id="detallePedidoId">123</span></h3>
+        <button type="button" class="cerrar-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="contenidoDetallePedido">
+          <!-- Aquí se cargará dinámicamente el detalle del pedido -->
+          <div class="cargando-datos">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Cargando detalles del pedido...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación toast -->
+  <div id="notificacionToast" class="notificacion-toast">
+    <div class="notificacion-contenido">
+      <i class="fas fa-info-circle"></i>
+      <span id="mensajeNotificacion">Mensaje de notificación</span>
+    </div>
+    <button class="notificacion-cerrar">&times;</button>
+  </div>
+
+  <!-- Pie de página -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <div class="columnas-footer">
+        <div class="columna-footer logo-footer">
+          <img src="/App-Meche-Artesanias/static/Img/logo.jpeg" alt="Mech Artesanal Logo">
+          <div class="redes-footer">
+            <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>¿QUIÉNES SOMOS?</h3>
+          <ul>
+            <li><a href="#">Misión</a></li>
+            <li><a href="#">Visión</a></li>
+            <li><a href="#">Materiales</a></li>
+            <li><a href="#">Nuestra cultura</a></li>
+          </ul>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>NUESTRAS MOCHILAS</h3>
+          <ul>
+            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="#">Productos Destacados</a></li>
+            <li><a href="#">¿Cómo Cuidar una Mochila?</a></li>
+            <li><a href="#">Política Ambiental</a></li>
+          </ul>
+        </div>
+        
+        <div class="columna-footer">
+          <h3>CONTÁCTANOS</h3>
+          <ul>
+            <li><a href="https://www.instagram.com/meche_artesanias/" target="_blank">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Correo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="derechos">
+        <p>&copy; 2025 Mech Artesanal. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  
+  <script src="/App-Meche-Artesanias/static/Archivos-Js/dashboard-spa.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+/* Variables globales que uso para mantener la consistencia con el diseño existente */
+:root {
+    --color-principal: #791e40;
+    --color-secundario: #a52b55;
+    --color-texto: #333333;
+    --color-claro: #ffffff;
+    --color-fondo: #f5f5f5;
+    --color-dorado: #b78b40;
+    --fuente-principal: 'Arial', sans-serif;
+    --espaciado: 20px;
+  }
+  
+  /* Estilos generales que siempre uso como base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--fuente-principal);
+    color: var(--color-texto);
+    line-height: 1.6;
+    background: url('patron-mochilas.png');
+    background-repeat: repeat;
+    background-size: 200px;
+    background-attachment: fixed;
+    background-color: var(--color-fondo);
+  }
+  
+  .contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
+  /* Estilos para la sección de registro */
+  .registro {
+    padding: 80px 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    position: relative;
+  }
+  
+  .registro-contenedor {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--color-claro);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+  }
+  
+  .registro h2 {
+    color: var(--color-principal);
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+  
+  /* Estilos para el formulario de registro */
+  .formulario-registro {
+    width: 100%;
+  }
+  
+  .campo-formulario {
+    margin-bottom: 20px;
+  }
+  
+  .campo-formulario label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  
+  .campo-formulario input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: var(--fuente-principal);
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .campo-formulario input:focus {
+    outline: none;
+    border-color: var(--color-principal);
+  }
+  
+  .campo-formulario select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: var(--fuente-principal);
+    font-size: 16px;
+    background-color: var(--color-claro);
+    cursor: pointer;
+  }
+  
+  /* Estilos para el botón de registrarse */
+  .btn-registrarse {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-principal);
+    color: var(--color-claro);
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-registrarse:hover {
+    background-color: var(--color-secundario);
+  }
+  
+  .btn-registrarse::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+  }
+  
+  .btn-registrarse:hover::before {
+    left: 100%;
+  }
+  
+  /* Mensaje para usuarios existentes */
+  .usuario-existente {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .usuario-existente a {
+    color: var(--color-principal);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .usuario-existente a:hover {
+    color: var(--color-secundario);
+  }
+  
+  /* Mensaje de error para validación */
+  .mensaje-error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+  }
+  
+  /* Estilo para campos con error */
+  .campo-error {
+    border-color: #e74c3c !important;
+  }
+  
+  /* Animación para el formulario */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .registro-contenedor {
+    animation: fadeIn 0.8s ease forwards;
+  }
+  
+  /* Mensaje de éxito */
+  .mensaje-exito {
+    background-color: #27ae60;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+  }
+  
+  /* Estilo para el mensaje de contraseñas no coincidentes */
+  .mensaje-no-coinciden {
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+  }
+  
+  /* Estilos responsive */
+  @media (max-width: 768px) {
+    .registro-contenedor {
+      padding: 30px 20px;
+    }
+    
+    .registro h2 {
+      font-size: 2rem;
+    }
+  }
