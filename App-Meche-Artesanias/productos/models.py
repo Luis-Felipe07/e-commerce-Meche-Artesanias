@@ -1,6 +1,7 @@
 from django.db import models
 from usuarios.models import UsuarioPersonalizado
 
+
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
 
@@ -51,4 +52,8 @@ class DetallePedido(models.Model):
 
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"
+
+
+
+
 

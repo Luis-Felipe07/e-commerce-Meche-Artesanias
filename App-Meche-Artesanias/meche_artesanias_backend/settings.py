@@ -127,4 +127,6 @@ AUTH_USER_MODEL = 'usuarios.UsuarioPersonalizado'
 
 
 
+
+
 CORS_ALLOW_ALL_ORIGINS = True

@@ -8,6 +8,7 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('api/usuarios/', include('usuarios.urls')),
+    path('api/', include('usuarios.urls')),
 ]
 
 if settings.DEBUG:
