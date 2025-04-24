@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mech Artesanal - Mi Cuenta</title>
+  <!-- Hojas de estilos -->
+  <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard-2.css' %}">
+  <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard-spa.css' %}">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Barra superior con la información de contacto y redes sociales -->
+  <div class="barra-superior">
+    <div class="contenedor">
+      <div class="contacto-info">
+        <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
+        <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
+      </div>
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <div class="usuario-menu">
+          <a href="#" id="menuUsuario"><i class="fas fa-user-circle"></i> <span id="nombreUsuario"></span></a>
+          <div class="dropdown-menu">
+            <a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Mi Panel</a>
+            <a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Editar Perfil</a>
+            <a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a>
+            <a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a>
+            <a href="#" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Encabezado con logo, buscador y navegación -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <div class="logo">
+        <a href="index-pgbienvenida.html">
+          <img src="{% static 'Img/logo.jpeg' %}" alt="Mech Artesanal Logo">
+        </a>
+      </div>
+      <div class="buscador">
+        <form action="#" method="get">
+          <input type="text" placeholder="Buscar">
+          <button type="button" id="cerrarBusqueda" class="btn-cerrar">&times;</button>
+        </form>
+      </div>
+      <nav class="navegacion">
+        <ul>
+          <li><a href="index-pgbienvenida.html">Inicio</a></li>
+          <li><a href="tienda.html">Tienda</a></li>
+          <li><a href="nosotros.html">¿Quiénes Somos?</a></li>
+          <li><a href="index-pgbienvenida.html">Contáctanos</a></li>
+        </ul>
+      </nav>
+      <div class="carrito">
+        <a href="carrito.html">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="contador-carrito">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Panel principal del cliente -->
+  <main class="panel-cliente">
+    <div class="contenedor">
+      <div class="bienvenida-cliente">
+        <h1>Bienvenido/a, <span id="nombreClientePanel">Usuario</span></h1>
+        <p>Este es tu panel personal donde puedes administrar tus pedidos y datos.</p>
+      </div>
+
+      <!-- Sección de resumen y opciones rápidas -->
+      <div class="dashboard-cliente">
+        <!-- Panel lateral con menú de navegación -->
+        <aside class="menu-lateral">
+          <div class="foto-perfil">
+            <img id="imgPerfilUsuario" src="{% static 'Img/usuario-default.jpg' %}" alt="Foto de perfil">
+            <h3 id="nombrePerfilUsuario">Usuario</h3>
+            <p id="emailUsuario">usuario@ejemplo.com</p>
+          </div>
+          <nav class="menu-cliente">
+            <ul>
+              <li class="activo"><a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Panel Principal</a></li>
+              <li><a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
+              <li><a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a></li>
+              <li><a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a></li>
+              <li><a href="#" id="cerrarSesionMenu"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- Contenido principal del dashboard -->
+        <div class="contenido-dashboard">
+          <div id="cargando-seccion" class="oculto">
+            <div class="spinner-carga"><i class="fas fa-spinner fa-spin"></i></div>
+            <p>Cargando contenido...</p>
+          </div>
+          <div id="seccion-contenido">
+            <!-- Dashboard -->
+            <div id="seccion-dashboard" class="seccion-panel active">
+              <div class="tarjetas-resumen">
+                <div class="tarjeta">
+                  <div class="icono-tarjeta"><i class="fas fa-shopping-bag"></i></div>
+                  <div class="info-tarjeta">
+                    <h3>Pedidos</h3>
+                    <p id="totalPedidos">0</p>
+                    <a href="#pedidos" data-section="pedidos">Ver todos</a>
+                  </div>
+                </div>
+                <div class="tarjeta">
+                  <div class="icono-tarjeta"><i class="fas fa-map-marker-alt"></i></div>
+                  <div class="info-tarjeta">
+                    <h3>Direcciones</h3>
+                    <p id="totalDirecciones">0</p>
+                    <a href="#direcciones" data-section="direcciones">Administrar</a>
+                  </div>
+                </div>
+                <div class="tarjeta">
+                  <div class="icono-tarjeta"><i class="fas fa-credit-card"></i></div>
+                  <div class="info-tarjeta">
+                    <h3>Métodos de Pago</h3>
+                    <p id="totalMetodosPago">0</p>
+                    <a href="#pagos" data-section="pagos">Administrar</a>
+                  </div>
+                </div>
+              </div>
+              <div class="ultimos-pedidos">
+                <div class="encabezado-seccion">
+                  <h2>Últimos Pedidos</h2>
+                  <a href="#pedidos" class="ver-todos'>Ver todos</a>
+                </div>
+                <div class="tabla-responsive">
+                  <table class="tabla-pedidos">
+                    <thead>
+                      <tr><th>#ID</th><th>Fecha</th><th>Estado</th><th>Total</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tablaPedidosRecientes">
+                      <tr><td colspan="5" class="sin-datos">Cargando pedidos recientes...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="productos-recomendados">
+                <div class="encabezado-seccion">
+                  <h2>Productos Recomendados</h2>
+                  <a href="tienda.html" class="ver-todos">Ver tienda</a>
+                </div>
+                <div class="recomendados-slider" id="productosRecomendados">
+                  <div class="recomendado-card">
+                    <img src="{% static 'Img/img-tienda/mochila-fique1.jpg' %}" alt="Mochila Recomendada 1">
+                    <h3>Cargando productos...</h3>
+                    <p>$--.--</p>
+                    <button class="btn-secundario">Agregar al carrito</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- resto del HTML continúa igual, reemplazando solo rutas con {% static %} -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="{% static 'Archivos-Js/dashboard-spa.js' %}"></script>
+</body>
+</html>

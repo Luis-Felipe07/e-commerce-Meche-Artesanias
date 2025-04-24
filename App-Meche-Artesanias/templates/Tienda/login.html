@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Login de Acceso{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'Estilos-Css/estilo-login.css' %}">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm" method="POST">
+      {% csrf_token %}
+      <input type="text" id="usuario" name="username" placeholder="Usuario" required>
+      <input type="password" id="clave" name="password" placeholder="Contraseña" required>
+      <button type="submit">Acceder</button>
+      <p id="mensajeError" class="error">{{ error_message }}</p>
+    </form>
+  </div>
+
+  <script src="{% static 'Archivos-Js/script-login.js' %}"></script>
+</body>
+</html>

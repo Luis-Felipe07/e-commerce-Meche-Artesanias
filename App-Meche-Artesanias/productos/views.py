@@ -16,3 +16,32 @@ def tienda(request):
         'num_productos': num_productos,
     }
     return render(request, 'Tienda/tienda.html', context)
+
+def bienvenida(request):
+    return render(request, 'Tienda/pgbienvenida.html')
+
+
+def buscar_productos(request):
+    q = request.GET.get('q', '')
+    if q:
+        productos = Producto.objects.filter(nombre__icontains=q)
+    else:
+        productos = Producto.objects.all()
+    return render(request, 'Tienda/tienda.html', {
+        'productos': productos,
+        'query': q,
+    })
+    
+def nosotros(request):
+    return render(request, 'Tienda/nosotros.html')
+
+def contacto(request):
+    return render(request, 'Tienda/contacto.html')
+
+
+def carrito(request):
+    return render(request, 'Carrito/carrito.html')
+
+def login(request):
+    return render(request, 'Tienda/login.html')
+    
