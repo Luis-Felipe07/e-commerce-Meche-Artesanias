@@ -10,7 +10,10 @@ urlpatterns = [
     path('api/usuarios/', include('usuarios.urls')),
     path('', include('productos.urls')),
     
+    
 ]
+    
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

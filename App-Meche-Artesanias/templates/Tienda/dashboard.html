@@ -53,10 +53,10 @@
       </div>
       <nav class="navegacion">
         <ul>
-          <li><a href="index-pgbienvenida.html">Inicio</a></li>
-          <li><a href="tienda.html">Tienda</a></li>
-          <li><a href="nosotros.html">¿Quiénes Somos?</a></li>
-          <li><a href="index-pgbienvenida.html">Contáctanos</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
+          <li><a href="{% url 'tienda' %}">Tienda</a></li>
+          <li><a href="{% url 'nosotros' %}">¿Quiénes Somos?</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Contáctanos</a></li>
         </ul>
       </nav>
       <div class="carrito">

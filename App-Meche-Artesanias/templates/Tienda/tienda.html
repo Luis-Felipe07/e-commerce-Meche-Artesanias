@@ -32,7 +32,7 @@
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="{% url 'bienvenida' %}">
+        <a href="{% url 'pgbienvenida' %}">
           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
@@ -47,7 +47,7 @@
       
       <nav class="navegacion">
         <ul>
-          <li><a href="{% url 'bienvenida' %}">Inicio</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
           <li><a href="{% url 'tienda' %}">Tienda</a></li>
           <li><a href="{% url 'nosotros' %}">¿Quiénes Somos?</a></li>
           <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
@@ -95,7 +95,13 @@
                     {% endfor %}
                   </select>
                 </div>
-                <button class="btn-secundario" data-producto-id="{{ producto.id }}">Agregar al carrito</button>
+                <form action="{% url 'agregar_al_carrito' producto.id 1 %}" method="get">
+                  <input type="number" name="cantidad" value="1" min="1" />
+                  <button type="submit" class="btn-secundario">Agregar al carrito</button>
+              </form>
+              
+                
+              
               </div>
             {% endif %}
           {% empty %}
@@ -139,7 +145,7 @@
           <h3>NUESTRAS MOCHILAS</h3>
           <ul>
             <li><a href="{% url 'tienda' %}">Tienda</a></li>
-            <li><a href="{% url 'bienvenida' %}#destacados">Productos Destacados</a></li>
+            <li><a href="{% url 'pgbienvenida' %}#destacados">Productos Destacados</a></li>
           </ul>
         </div>
 

@@ -6,7 +6,7 @@ const mensajeNoCoinciden = document.getElementById('mensajeNoCoinciden');
 // URL para la API de registro
 // Compañero en el backend Debe crear un endpoint para el registro de usuarios en  Django
 // Por ejemplo: '/api/registrar-usuario/' o similar
-const API_URL_REGISTRO = '/api/registrar-usuario/';
+const API_URL_REGISTRO = 'http://127.0.0.1:8000/api/registrar-usuario/';
 
 // Esta función comprueba si las contraseñas coinciden
 function verificarContraseñas() {
@@ -60,7 +60,9 @@ async function enviarDatosAlBackend(datosUsuario) {
       },
       body: JSON.stringify(datosUsuario)
     });
-    
+     
+    const data = await respuesta.json();
+    console.log(data);
     
     // Compañero Asegúrese de devolver códigos de estado apropiados y un JSON con mensajes claros
     if (respuesta.ok) {
@@ -168,6 +170,7 @@ formulario.addEventListener('submit', async function(evento) {
       numero_documento: document.getElementById('numeroDocumento').value.trim(),
       email: document.getElementById('email').value.trim(),
       password: document.getElementById('password').value
+      
       // No envío confirmarPassword porque ya validé que coincide con password
     };
     

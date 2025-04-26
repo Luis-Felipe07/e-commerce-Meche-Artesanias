@@ -23,7 +23,7 @@
       <div class="redes-sociales">
         <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="registro-cliente.html" target="_blank"><i class="fas fa-user"></i></a>
+        <a href="{% url 'registro_cliente' %}" target="_blank"><i class="fas fa-user"></i></a>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="index-pgbienvenida.html">
+        <a href="{% url 'pgbienvenida' %}">
           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
@@ -46,7 +46,7 @@
 
       <nav class="navegacion">
         <ul>
-          <li><a href="pgbienvenida.html">Inicio</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
           <li><a href="{% url 'tienda' %}">Tienda</a></li>
           <li><a href="{% url 'nosotros' % " target="_blank">¿Quiénes Somos?</a></li>
           <li><a href="#contacto">Contáctanos</a></li>
@@ -54,7 +54,7 @@
       </nav>
 
       <div class="carrito">
-        <a href="carrito.html" target="_blank">
+        <a href="{% url 'carrito' %}" target="_blank">
           <i class="fas fa-shopping-cart"></i>
         </a>
       </div>
@@ -73,7 +73,7 @@
     <div class="contenido">
       <h1>Mochilas Artesanales</h1>
       <p>Descubre nuestra colección única de mochilas hechas a mano con lana y fique por artesanos colombianos</p>
-      <a href="tienda.html" class="btn-principal">Ver Colección</a>
+      <a href="{% url 'tienda' %}" class="btn-principal">Ver Colección</a>
     </div>
   </section>
 
@@ -157,7 +157,7 @@
         <h2>Nuestra Historia</h2>
         <p>Somos un emprendimiento dedicado a preservar y promover la artesanía colombiana a través de mochilas tejidas a mano por artesanos locales, utilizando materiales naturales como lana y fique.</p>
         <p>Cada una de nuestras piezas cuenta una historia única, respetando técnicas ancestrales y apoyando a comunidades indígenas.</p>
-        <a href="nosotros.html" class="btn-secundario">Conoce más</a>
+        <a href="{% url 'nosotros' %}" class="btn-secundario">Conoce más</a>
       </div>
       <div class="historia-imagen">
         <img src="{% static 'Img/artesana.png' %}" alt="Artesanos trabajando">
@@ -269,7 +269,7 @@
         <div class="columna-footer">
           <h3>NUESTRAS MOCHILAS</h3>
           <ul>
-            <li><a href="tienda.html">Tienda</a></li>
+            <li><a href="{% url 'tienda' %}">Tienda</a></li>
             <li><a href="pgbienvenida.html#destacados">Productos Destacados</a></li>
           </ul>
         </div>
