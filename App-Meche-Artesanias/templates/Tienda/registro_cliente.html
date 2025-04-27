@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Mech Artesanal - Registro de Usuario{% endblock %}</title>
-
-  <link rel="stylesheet" href="{% static 'Estilos-Css/registro-cliente.css' %}">
+  <title>Mech Artesanal - Registro de Usuario</title>
+  
+  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/registro-cliente.css">
+  <!-- Iconos de Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -76,12 +77,13 @@
         </form>
 
         <div class="usuario-existente">
-          <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar Sesión</a></p>
+          <p>¿Ya tienes una cuenta? <a href="/App-Meche-Artesanias/static/index-login.html">Iniciar Sesión</a></p>
         </div>
       </div>
     </div>
   </section>
 
-  <script src="{% static 'Archivos-Js/registro-cliente.js' %}"></script>
+  
+  <script src="/App-Meche-Artesanias/static/Archivos-Js/registro-cliente.js"></script>
 </body>
 </html>
