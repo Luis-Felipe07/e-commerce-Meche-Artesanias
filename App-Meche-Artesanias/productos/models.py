@@ -24,9 +24,12 @@ class Producto(models.Model):
 class Carrito(models.Model):
     usuario = models.OneToOneField(UsuarioPersonalizado, on_delete=models.CASCADE)
 
+    def calcular_total(self):
+        total = sum(item.cantidad * item.producto.precio for item in self.items.all())
+        return total
+
     def __str__(self):
         return f"Carrito de {self.usuario.username}"
-
 class CarritoItem(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE, related_name='items')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -41,8 +44,18 @@ class Pedido(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     completado = models.BooleanField(default=False)
 
+    def procesar_pedido(self):
+        if not self.completado:
+            # Actualizar el stock de los productos
+            for detalle in self.detalles.all():
+                detalle.producto.stock -= detalle.cantidad
+                detalle.producto.save()
+            self.completado = True
+            self.save()
+
     def __str__(self):
         return f'Pedido #{self.id} - {self.usuario.username}'
+
 
 class DetallePedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='detalles')
@@ -53,7 +66,15 @@ class DetallePedido(models.Model):
     def __str__(self):
         return f"{self.cantidad} x {self.producto.nombre}"
 
+<<<<<<< HEAD
 
 
 
 
+=======
+class MetodoPago(models.Model):
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+>>>>>>> origin/JHAN/backend

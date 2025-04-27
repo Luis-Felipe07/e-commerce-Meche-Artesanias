@@ -36,5 +36,5 @@ class UsuarioPersonalizado(AbstractUser):
     REQUIRED_FIELDS = ['nombre', 'apellido', 'tipo_documento', 'numero_documento']
 
     def __str__(self):
-        return self.email
+        return self.username
 

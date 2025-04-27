@@ -1,0 +1,104 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.contenedor-carrito {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.contenedor-carrito h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.tabla-carrito th, .tabla-carrito td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-carrito th {
+  background-color: #e6f0f5;
+  color: #333;
+}
+
+.tabla-carrito td img {
+  width: 60px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.cantidad-input {
+  width: 60px;
+  padding: 0.3rem;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn-eliminar {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-eliminar:hover {
+  background-color: #c0392b;
+}
+
+.total-carrito {
+  text-align: right;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.total-carrito h2 {
+  color: #2c3e50;
+}
+
+.btn-pagar {
+  background-color: #27ae60;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+
+.btn-pagar:hover {
+  background-color: #1e8449;
+}
+
+@media (max-width: 768px) {
+  .tabla-carrito th, .tabla-carrito td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-pagar, .btn-eliminar {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+  }
+}

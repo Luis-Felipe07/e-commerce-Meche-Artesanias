@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="{% static 'Estilos-Css/carrito.css' %}">
+</head>
+<body>
+  <main class="contenedor-carrito">
+    <h1>Tu Carrito</h1>
+    
+    {% if productos %}
+    <table class="tabla-carrito">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for producto in productos %}
+        <tr data-id="{{ producto.id }}">
+          <td>{{ producto.nombre }}</td>
+          <td>${{ producto.precio }}</td>
+          <td>
+            <input type="number" value="{{ producto.cantidad }}" min="1" class="cantidad-input">
+          </td>
+          <td>${{ producto.subtotal }}</td>
+          <td>
+            <button class="btn-eliminar">Eliminar</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="total-carrito">
+      <h2>Total: ${{ total }}</h2>
+      <button class="btn-pagar">Proceder al pago</button>
+    </div>
+    {% else %}
+      <p>Tu carrito está vacío.</p>
+    {% endif %}
+  </main>
+
+  <script src="{% static 'Archivos-Js/carrito.js' %}"></script>
+</body>
+</html>
+

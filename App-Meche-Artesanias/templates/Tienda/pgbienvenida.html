@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mech Artesanal - Mochilas Artesanales</title>
   <!-- Hoja de estilos principal -->
-  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/Estilos-pgbienvenida.css">
+  <link rel="stylesheet" href="{% static 'Estilos-Css/Estilos-pgbienvenida.css' %}">
   <!-- Iconos de Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -20,10 +21,9 @@
         <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
       </div>
       <div class="redes-sociales">
-        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i
-            class="fab fa-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="registro-cliente.html" target="_blank"><i class="fas fa-user"></i></a>
+        <a href="{% url 'registro_cliente' %}" target="_blank"><i class="fas fa-user"></i></a>
       </div>
     </div>
   </div>
@@ -32,8 +32,8 @@
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="index-pgbienvenida.html">
-          <img src="/App-Meche-Artesanias/static/Img/logo.png" alt="Mech Artesanal Logo">
+        <a href="{% url 'pgbienvenida' %}">
+          <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
 
@@ -46,15 +46,15 @@
 
       <nav class="navegacion">
         <ul>
-          <li><a href="index-pgbienvenida.html">Inicio</a></li>
-          <li><a href="tienda.html" target="_blank">Tienda</a></li>
-          <li><a href="nosotros.html" target="_blank">¿Quiénes Somos?</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
+          <li><a href="{% url 'tienda' %}">Tienda</a></li>
+          <li><a href="{% url 'nosotros' % " target="_blank">¿Quiénes Somos?</a></li>
           <li><a href="#contacto">Contáctanos</a></li>
         </ul>
       </nav>
 
       <div class="carrito">
-        <a href="carrito.html" target="_blank">
+        <a href="{% url 'carrito' %}" target="_blank">
           <i class="fas fa-shopping-cart"></i>
         </a>
       </div>
@@ -63,7 +63,7 @@
 
   <!-- Sección hero  -->
   <section class="hero-alt">
-    <img src="/App-Meche-Artesanias/static/Img/mochila-colgando.jpeg" alt="Fondo natural">
+    <img src="{% static 'Img/mochila-colgando.jpeg' %}" alt="Fondo natural">
     <div class="mochilas-flotantes">
       <div class="mochila-flotante mochila-1"></div>
       <div class="mochila-flotante mochila-2"></div>
@@ -73,7 +73,7 @@
     <div class="contenido">
       <h1>Mochilas Artesanales</h1>
       <p>Descubre nuestra colección única de mochilas hechas a mano con lana y fique por artesanos colombianos</p>
-      <a href="tienda.html" class="btn-principal">Ver Colección</a>
+      <a href="{% url 'tienda' %}" class="btn-principal">Ver Colección</a>
     </div>
   </section>
 
@@ -83,10 +83,9 @@
       <h2>Productos Destacados</h2>
       <div class="productos-grid">
         <div class="producto">
-          <img src="/App-Meche-Artesanias/static/Img/mochila.png" alt="Mochila Wayuu">
+          <img src="{% static 'Img/mochila.png' %}" alt="Mochila Wayuu">
           <h3>Mochila Wayuu</h3>
           <p>$180.000</p>
-          <!-- Selección de método de pago -->
           <div class="metodos-pago">
             <label for="pago-1">Método de pago:</label>
             <select id="pago-1">
@@ -100,10 +99,9 @@
           <button class="btn-secundario">Agregar al carrito</button>
         </div>
         <div class="producto">
-          <img src="/App-Meche-Artesanias/static/Img/mochila2.jpg" alt="Mochila Arhuaca">
+          <img src="{% static 'Img/mochila2.jpg' %}" alt="Mochila Arhuaca">
           <h3>Mochila Arhuaca</h3>
           <p>$210.000</p>
-          <!-- Selección de método de pago -->
           <div class="metodos-pago">
             <label for="pago-2">Método de pago:</label>
             <select id="pago-2">
@@ -117,10 +115,9 @@
           <button class="btn-secundario">Agregar al carrito</button>
         </div>
         <div class="producto">
-          <img src="/App-Meche-Artesanias/static/Img/mochila3.png" alt="Mochila Kankuama">
+          <img src="{% static 'Img/mochila3.png' %}" alt="Mochila Kankuama">
           <h3>Mochila Kankuama</h3>
           <p>$195.000</p>
-          <!-- Selección de método de pago -->
           <div class="metodos-pago">
             <label for="pago-3">Método de pago:</label>
             <select id="pago-3">
@@ -134,10 +131,9 @@
           <button class="btn-secundario">Agregar al carrito</button>
         </div>
         <div class="producto">
-          <img src="/App-Meche-Artesanias/static/Img/mochilas.jpeg" alt="Mochila Guane">
+          <img src="{% static 'Img/mochilas.jpeg' %}" alt="Mochila Guane">
           <h3>Mochila Guane</h3>
           <p>$220.000</p>
-          <!-- Selección de método de pago -->
           <div class="metodos-pago">
             <label for="pago-4">Método de pago:</label>
             <select id="pago-4">
@@ -159,14 +155,12 @@
     <div class="contenedor">
       <div class="historia-contenido">
         <h2>Nuestra Historia</h2>
-        <p>Somos un emprendimiento dedicado a preservar y promover la artesanía colombiana a través de mochilas tejidas
-          a mano por artesanos locales, utilizando materiales naturales como lana y fique.</p>
-        <p>Cada una de nuestras piezas cuenta una historia única, respetando técnicas ancestrales y apoyando a
-          comunidades indígenas.</p>
-        <a href="nosotros.html" class="btn-secundario">Conoce más</a>
+        <p>Somos un emprendimiento dedicado a preservar y promover la artesanía colombiana a través de mochilas tejidas a mano por artesanos locales, utilizando materiales naturales como lana y fique.</p>
+        <p>Cada una de nuestras piezas cuenta una historia única, respetando técnicas ancestrales y apoyando a comunidades indígenas.</p>
+        <a href="{% url 'nosotros' %}" class="btn-secundario">Conoce más</a>
       </div>
       <div class="historia-imagen">
-        <img src="/App-Meche-Artesanias/static/Img/artesana.png" alt="Artesanos trabajando">
+        <img src="{% static 'Img/artesana.png' %}" alt="Artesanos trabajando">
       </div>
     </div>
   </section>
@@ -203,11 +197,11 @@
       <h2>Comentarios</h2>
       <div class="comentarios-formulario">
         <div class="estrellas">
-          <span class="estrella" data-valor="1">&#9733;</span>
-          <span class="estrella" data-valor="2">&#9733;</span>
-          <span class="estrella" data-valor="3">&#9733;</span>
-          <span class="estrella" data-valor="4">&#9733;</span>
-          <span class="estrella" data-valor="5">&#9733;</span>
+          <span class="estrella" data-valor="1">★</span>
+          <span class="estrella" data-valor="2">★</span>
+          <span class="estrella" data-valor="3">★</span>
+          <span class="estrella" data-valor="4">★</span>
+          <span class="estrella" data-valor="5">★</span>
         </div>
         <textarea id="comentario" placeholder="Escribe tu comentario"></textarea>
         <button id="enviarComentario" class="btn-secundario">Enviar Comentario</button>
@@ -218,13 +212,13 @@
     </div>
   </section>
 
-  <!-- Sección de Contacto  -->
+  <!-- Sección de Contacto -->
   <section id="contacto" class="contacto">
     <div class="contenedor">
       <h2>¡Contáctanos!</h2>
       <div class="contacto-wrapper">
         <div class="contacto-imagen">
-          <img src="/App-Meche-Artesanias/static/Img/mochila4.png" alt="Mochilas artesanales">
+          <img src="{% static 'Img/mochila4.png' %}" alt="Mochilas artesanales">
         </div>
         <div class="formulario-contacto">
           <form id="formularioContacto">
@@ -256,51 +250,45 @@
     <div class="contenedor">
       <div class="columnas-footer">
         <div class="columna-footer logo-footer">
-          <img src="/App-Meche-Artesanias/static/Img/logo.png" alt="Mech Artesanal Logo">
+          <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
           <div class="redes-footer">
-            <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i
-                class="fab fa-facebook"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
             <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
+            <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i></a>
           </div>
         </div>
-
         <div class="columna-footer">
           <h3>¿QUIÉNES SOMOS?</h3>
           <ul>
             <li><a href="nosotros.html#historia">Nuestra Historia</a></li>
-            <li><a href="nosotros.html#mision-vision">¿Cúal es nuestra misión?</a></li>
-            <li><a href="nosotros.html#mision-vision">¿Cúal es nuestra visión?</a></li>
+            <li><a href="nosotros.html#mision-vision">¿Cuál es nuestra misión?</a></li>
+            <li><a href="nosotros.html#mision-vision">¿Cuál es nuestra visión?</a></li>
             <li><a href="nosotros.html#objetivos">Objetivos Institucionales</a></li>
           </ul>
         </div>
-
         <div class="columna-footer">
           <h3>NUESTRAS MOCHILAS</h3>
           <ul>
-            <li><a href="tienda.html">Tienda</a></li>
-            <li><a href="index-pgbienvenida.html#destacados">Productos Destacados</a></li>
+            <li><a href="{% url 'tienda' %}">Tienda</a></li>
+            <li><a href="pgbienvenida.html#destacados">Productos Destacados</a></li>
           </ul>
         </div>
-
         <div class="columna-footer">
           <h3>CONTÁCTANOS</h3>
           <ul>
             <li><a href="https://www.instagram.com/meche_artesanias/" target="_blank">Instagram</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=100017948161298">Facebook</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank">Facebook</a></li>
             <li><a href="mailto:mechartesanal@gmail.com">Correo</a></li>
           </ul>
         </div>
       </div>
-
       <div class="derechos">
         <p>&copy; 2025 Mech Artesanal. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
 
-  <script src="/App-Meche-Artesanias/static/Archivos-Js/script-pgbienvenida.js"></script>
-
+  <script src="{% static 'Archivos-Js/script-pgbienvenida.js' %}"></script>
 </body>
 
 </html>
