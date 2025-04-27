@@ -94,7 +94,7 @@ formulario.addEventListener('submit', function(evento) {
     
     // Después de un tiempo, redirijo al usuario a la página de login
     setTimeout(() => {
-      window.location.href = 'index-login.html';
+      window.location.href = 'login.html';
     }, 3000); // Redirijo después de 3 segundos
   }
 });

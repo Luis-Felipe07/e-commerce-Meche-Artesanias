@@ -3,20 +3,24 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Login de Acceso{% endblock %}</title>
+  <title>Login de Acceso</title>
   <link rel="stylesheet" href="{% static 'Estilos-Css/estilo-login.css' %}">
 </head>
 <body>
   <div class="login-container">
     <h2>Iniciar Sesión</h2>
-    <form id="loginForm" method="POST">
+    <form id="loginForm">
       {% csrf_token %}
       <input type="text" id="usuario" name="username" placeholder="Usuario" required>
       <input type="password" id="clave" name="password" placeholder="Contraseña" required>
       <button type="submit">Acceder</button>
-      <p id="mensajeError" class="error">{{ error_message }}</p>
+      <p id="mensajeError" class="error"></p>
     </form>
   </div>
+
+  <script>
+    const dashboardurl = "{% url 'dashboard' %}"; // Definir la URL del dashboard en JS
+  </script>
 
   <script src="{% static 'Archivos-Js/script-login.js' %}"></script>
 </body>

@@ -95,10 +95,12 @@
                     {% endfor %}
                   </select>
                 </div>
-                <form action="{% url 'agregar_al_carrito' producto.id 1 %}" method="get">
+                <form action="{% url 'agregar_al_carrito' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="producto_id" value="{{ producto.id }}" />
                   <input type="number" name="cantidad" value="1" min="1" />
                   <button type="submit" class="btn-secundario">Agregar al carrito</button>
-              </form>
+                </form>
               
                 
               

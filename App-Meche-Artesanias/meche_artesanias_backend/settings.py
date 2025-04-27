@@ -49,7 +49,9 @@ ROOT_URLCONF = 'meche_artesanias_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',  # Si tienes una carpeta global de plantillas
+        ], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

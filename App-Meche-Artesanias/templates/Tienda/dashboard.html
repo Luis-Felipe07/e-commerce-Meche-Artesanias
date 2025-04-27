@@ -41,7 +41,7 @@
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="index-pgbienvenida.html">
+        <a href="{% url 'pgbienvenida' %}">
           <img src="{% static 'Img/logo.jpeg' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
@@ -60,7 +60,7 @@
         </ul>
       </nav>
       <div class="carrito">
-        <a href="carrito.html">
+        <a href=""{% url 'carrito' %}" id="iconoCarrito">
           <i class="fas fa-shopping-cart"></i>
           <span class="contador-carrito">0</span>
         </a>
@@ -154,7 +154,7 @@
                 </div>
                 <div class="recomendados-slider" id="productosRecomendados">
                   <div class="recomendado-card">
-                    <img src="{% static 'Img/img-tienda/mochila-fique1.jpg' %}" alt="Mochila Recomendada 1">
+                    <img src="{% static 'Img/img/mochila-fique1.jpg' %}" alt="Mochila Recomendada 1">
                     <h3>Cargando productos...</h3>
                     <p>$--.--</p>
                     <button class="btn-secundario">Agregar al carrito</button>
@@ -162,7 +162,7 @@
                 </div>
               </div>
             </div>
-            <!-- resto del HTML continúa igual, reemplazando solo rutas con {% static %} -->
+            
           </div>
         </div>
       </div>

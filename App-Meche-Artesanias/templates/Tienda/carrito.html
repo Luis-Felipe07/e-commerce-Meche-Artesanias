@@ -27,11 +27,11 @@
           <td>{{ producto.nombre }}</td>
           <td>${{ producto.precio }}</td>
           <td>
-            <input type="number" value="{{ producto.cantidad }}" min="1" class="cantidad-input">
+            <input type="number" value="{{ producto.cantidad }}" min="1" class="cantidad-input" data-id="{{ producto.id }}">
           </td>
           <td>${{ producto.subtotal }}</td>
           <td>
-            <button class="btn-eliminar">Eliminar</button>
+            <button class="btn-eliminar" data-id="{{ producto.id }}">Eliminar</button>
           </td>
         </tr>
         {% endfor %}
@@ -50,4 +50,3 @@
   <script src="{% static 'Archivos-Js/carrito.js' %}"></script>
 </body>
 </html>
-

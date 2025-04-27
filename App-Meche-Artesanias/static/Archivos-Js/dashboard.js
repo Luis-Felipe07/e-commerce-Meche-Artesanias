@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!token) {
             // Si no hay token, redirijo al login
-            window.location.href = 'index-login.html';
+            window.location.href = 'login.html';
             return;
         }
         

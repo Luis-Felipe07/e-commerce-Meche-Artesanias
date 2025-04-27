@@ -20,19 +20,24 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
       mensajeError.textContent = "";
       alert("¡Bienvenido!");
 
-      // Guarda el token en localStorage para usarlo después
+      // Guarda los tokens en localStorage
       localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);
+      localStorage.removeItem("tokenExpiration");
+      
+      // También podemos guardar la fecha de expiración (1 hora desde ahora para access token)
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 1);
+      localStorage.setItem("tokenExpiration", expiresAt.toISOString());
 
-      // Redirige página principal
-      window.location.href = "index-pgbienvenida.html";
+      // Redirige al dashboard del usuario
+      window.location.href = "/usuario/dashboard/";// Cambia esto a la ruta de tu dashboard
     } else {
-      mensajeError.textContent = data.detail || "Usuario o contraseña incorrectos.";
+      mensajeError.textContent = data.error || "Usuario o contraseña incorrectos.";
     }
   } catch (error) {
     mensajeError.textContent = "Error al conectar con el servidor.";
     console.error("Error de login:", error);
   }
 });
-
 

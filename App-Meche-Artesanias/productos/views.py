@@ -9,6 +9,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Carrito, CarritoItem, Producto, Pedido, DetallePedido
+from rest_framework import status
+
 
 
 def tienda(request):
@@ -79,21 +81,15 @@ def buscar_productos(request):
         'query': q,
     })
     
-def nosotros(request):
-    return render(request, 'Tienda/nosotros.html')
 
-def contacto(request):
-    return render(request, 'Tienda/contacto.html')
 
 
 def carrito(request):
     return render(request, 'Tienda/carrito.html')
 
-def login(request):
-    return render(request, 'Tienda/login.html')
 
-def registro_cliente(request):
-    return render(request, 'Tienda/registro_cliente.html')
+
+
 
 
 
