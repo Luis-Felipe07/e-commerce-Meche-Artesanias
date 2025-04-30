@@ -1,231 +1,224 @@
 
-// Espero a que el DOM esté completamente cargado
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializo el array del carrito usando localStorage si existe
-  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  
-  // Función para mostrar notificaciones al usuario
-  function mostrarNotificacion(mensaje, tipo = 'exito') {
-    // Primero verifico si ya existe una notificación
-    let notificacion = document.querySelector('.notificacion');
-    
-    // Si no existe, la creo
-    if (!notificacion) {
-      notificacion = document.createElement('div');
-      notificacion.className = 'notificacion';
-      document.body.appendChild(notificacion);
-    }
-    
-    // Asigno el mensaje y la clase según el tipo
-    notificacion.textContent = mensaje;
-    notificacion.classList.add(tipo);
-    notificacion.classList.add('mostrar');
-    
-    // Oculto la notificación después de 3 segundos
-    setTimeout(() => {
-      notificacion.classList.remove('mostrar');
-    }, 3000);
-  }
-  
-  // Función para actualizar el contador del carrito
-  function actualizarContadorCarrito() {
-    const contador = document.getElementById('contador-carrito');
-    if (!contador) return;
-    
-    // Calculo el total de productos en el carrito
-    const totalProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
-    contador.textContent = totalProductos > 0 ? totalProductos : '';
+
+  // --- Función de Notificación---
+  function mostrarNotificacion(mensaje, tipo = 'info', duracion = 3500) {
+       // Reutilizo el contenedor del dashboard si existe, o creo uno nuevo
+      const contenedor = document.getElementById('contenedor-notificaciones') || crearContenedorNotificaciones();
+      const notif = document.createElement('div');
+      
+      notif.className = `notificacion-toast ${tipo}`;
+      notif.classList.add('mostrar'); // Clase para animación de entrada
+
+      let icono = 'fa-info-circle'; // Icono por defecto
+      if (tipo === 'success') icono = 'fa-check-circle';
+      else if (tipo === 'warning') icono = 'fa-exclamation-triangle';
+      else if (tipo === 'error') icono = 'fa-times-circle';
+
+      // Contenido con icono y mensaje
+      notif.innerHTML = `
+          <div class="notificacion-contenido">
+              <i class="fas ${icono}"></i>
+              <span>${mensaje}</span>
+          </div>
+          <button class="notificacion-cerrar">&times;</button>
+      `;
+      contenedor.appendChild(notif);
+
+      // Botón para cerrar
+      notif.querySelector('.notificacion-cerrar').addEventListener('click', () => {
+           notif.classList.remove('mostrar');
+           // Espero a que termine la animación de salida antes de eliminar
+           notif.addEventListener('transitionend', () => notif.remove());
+      });
+
+      // Cierre automático
+      setTimeout(() => {
+          notif.classList.remove('mostrar');
+          notif.addEventListener('transitionend', () => notif.remove());
+      }, duracion);
   }
 
-  /* Función para actualizar el localStorage con el carrito */
-  function actualizarCarrito() {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    actualizarContadorCarrito();
-  }
-  
-  // Función para enviar los datos al backend de Django
-  async function agregarAlCarritoBackend(productoId, metodoPago) {
-    try {
-      // Muestro un loader para indicar que se está procesando
-      const loader = document.createElement('div');
-      loader.className = 'loader';
-      document.body.appendChild(loader);
-      loader.style.display = 'block';
-      
-      // Obtengo el token CSRF
-      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-      
-      // Realizo la petición al backend de Django
-      const response = await fetch('/agregar-al-carrito/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken
-        },
-        body: JSON.stringify({
-          producto_id: productoId,
-          metodo_pago: metodoPago,
-          cantidad: 1 
-        })
-      });
-      
-      // Oculto el loader
-      loader.style.display = 'none';
-      document.body.removeChild(loader);
-      
-      if (!response.ok) {
-        throw new Error('Error al comunicarse con el servidor');
+  // Función para crear el contenedor si no existe 
+  function crearContenedorNotificaciones() {
+      let cont = document.getElementById('contenedor-notificaciones');
+      if (!cont) {
+          cont = document.createElement('div');
+          cont.id = 'contenedor-notificaciones';
+          // Estilos básicos si no están en CSS general
+          cont.style.cssText = 'position:fixed; bottom:20px; right:20px; z-index:1050; display:flex; flex-direction:column; gap:10px; max-width: 350px; width: 90%;';
+          document.body.appendChild(cont);
       }
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        // Si la operación fue exitosa, actualizo el carrito local
-        const productoExistente = carrito.find(item => item.id === productoId);
-        
-        if (productoExistente) {
-          // Si el producto ya existe, incremento la cantidad
-          productoExistente.cantidad += 1;
-        } else {
-          // Si es un producto nuevo, lo añado al carrito
-          carrito.push({
-            id: productoId,
-            cantidad: 1,
-            metodoPago: metodoPago
-          });
-        }
-        
-        // Actualizo el localStorage y el contador
-        actualizarCarrito();
-        
-        // Muestro notificación de éxito
-        mostrarNotificacion('Producto agregado al carrito correctamente', 'exito');
-        
-        return true;
-      } else {
-        // Si hubo un error en el servidor, muestro el mensaje
-        mostrarNotificacion(data.message || 'Error al agregar al carrito', 'error');
-        return false;
+      return cont;
+  }
+
+  // --- Función fetchAPI (Revisada) ---
+  async function fetchAPI(url, options = {}) {
+      const token = localStorage.getItem('accessToken');
+      const defaultHeaders = {
+          'Content-Type': 'application/json', // Importante para POST/PUT con JSON
+          'Authorization': token ? `Bearer ${token}` : ''
+      };
+    
+      // Aseguro URL relativa correcta
+      const finalUrl = url.startsWith('/') ? url : `/${url}`;
+
+      const config = {
+          ...options,
+          headers: { ...defaultHeaders, ...options.headers, }
+      };
+      if (!token && config.headers['Authorization'] === '') {
+          delete config.headers['Authorization']; // No enviar header vacío si no hay token
       }
-    } catch (error) {
-      console.error('Error:', error);
-      mostrarNotificacion('Error de conexión. Intente nuevamente.', 'error');
-      return false;
-    }
-  }
-  
-  // Función para manejar el evento de click en botones "Agregar al carrito"
-  function manejarClickAgregarCarrito() {
-    // Obtengo el ID del producto desde el atributo data
-    const productoId = this.getAttribute('data-producto-id');
-    
-    // Obtengo el selector de método de pago correspondiente a este producto
-    const selectorPago = document.getElementById(`pago-${productoId}`);
-    const metodoPago = selectorPago ? selectorPago.value : '';
-    
-    // Verifico que se haya seleccionado un método de pago
-    if (!metodoPago) {
-      mostrarNotificacion('Por favor seleccione un método de pago', 'error');
-      return;
-    }
-    
-    // Llamo a la función para agregar al carrito en el backend
-    agregarAlCarritoBackend(productoId, metodoPago);
-  }
-  
-  // Función para cargar imágenes de forma dinámica
-  function cargarImagenesDinamicas() {
-    // Selecciono todas las imágenes de productos que necesitan cargarse
-    const imagenesProductos = document.querySelectorAll('.producto img');
-    
-    imagenesProductos.forEach(img => {
-      // Verifico si la imagen tiene un src válido
-      if (img.src && !img.src.includes('producto-default.jpg')) {
-        // Creo un objeto Image para precargar
-        const imgPreload = new Image();
-        
-        // Cuando la imagen se carga correctamente
-        imgPreload.onload = function() {
-          // Actualizo la imagen con efecto de fade in
-          img.style.opacity = '0';
-          img.src = this.src;
+
+      try {
+          let response = await fetch(finalUrl, config);
+
+          // Manejo simplificado de refresco (solo si falla por 401)
+          if (response.status === 401 && !options.triedRefresh && localStorage.getItem('refreshToken')) {
+               console.log("Intento de refresco desde tienda.js...");
+                
+                const refreshed = false; 
+                if (refreshed) {
+                   // Reintento la llamada
+                   config.headers['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
+                   config.triedRefresh = true;
+                   response = await fetch(finalUrl, config);
+                } else {
+                   throw new Error("Autenticación requerida."); 
+                }
+          }
+
+          // Obtengo el cuerpo de la respuesta (si existe) ANTES de verificar response.ok
           
-          // Efecto de fade in
-          setTimeout(() => {
-            img.style.transition = 'opacity 0.5s ease';
-            img.style.opacity = '1';
-          }, 50);
-        };
-        
-        // Si hay error al cargar la imagen
-        imgPreload.onerror = function() {
-          // se usa una imagen por defecto
-          img.src = '/static/Img/producto-default.jpg';
-        };
-        
-        // Inicio la carga de la imagen
-        imgPreload.src = img.src;
+          let data = {};
+          try {
+               // Intento leer como JSON. Si la respuesta es 204 No Content, esto dará error.
+               if (response.status !== 204) {
+                   data = await response.json();
+               } else {
+                   data = { success: true }; 
+               }
+          } catch (e) {
+              // Si falla el parseo JSON y la respuesta NO fue OK, es un problema
+              if (!response.ok) {
+                  console.error("Error parseando respuesta JSON de error:", e);
+                  throw new Error(`Error ${response.status} del servidor (respuesta no JSON)`);
+              }
+              // Si fue OK pero no JSON  asumo éxito vacío
+               data = { success: true };
+          }
+
+
+          if (!response.ok) {
+              // Si la respuesta no fue OK (4xx, 5xx), lanzo error con mensaje del backend
+              throw new Error(data.error || data.detail || data.mensaje || `Error ${response.status}`);
+          }
+
+          return data; // Devuelvo los datos JSON (o el objeto simulado para 204)
+
+      } catch (error) {
+          console.error(`Error en fetchAPI para ${finalUrl} desde tienda.js:`, error);
+          // Relanzo el error para que la función que llamó a fetchAPI lo maneje
+          throw error;
       }
-    });
   }
-  
-  // Función para inicializar el buscador
-  function inicializarBuscador() {
-    const inputBuscador = document.querySelector('.buscador input');
-    const btnCerrar = document.getElementById('cerrarBusqueda');
-    
-    if (inputBuscador && btnCerrar) {
-      // Muestro el botón de cerrar cuando hay texto
-      inputBuscador.addEventListener('input', function() {
-        btnCerrar.style.display = this.value.length > 0 ? 'block' : 'none';
-      });
-      
-      // Limpio el campo y oculto el botón cuando se hace clic en cerrar
-      btnCerrar.addEventListener('click', function() {
-        inputBuscador.value = '';
-        this.style.display = 'none';
-        inputBuscador.focus();
-      });
+
+  // --- Actualizar Contador ---
+  function actualizarContadorCarritoVisual(carritoData) {
+      const contadorElement = document.getElementById('contador-carrito'); 
+      if (!contadorElement) return;
+
+      const items = carritoData?.items || [];
+      const totalProductos = items.reduce((total, item) => total + item.cantidad, 0);
+
+      contadorElement.textContent = totalProductos > 0 ? totalProductos : '0';
+       // Opcional: Ocultar/mostrar si es cero
+       contadorElement.style.display = totalProductos > 0 ? 'inline-block' : 'none';
+  }
+
+  // --- Cargar Contador Inicial ---
+  async function cargarContadorInicial() {
+    if (localStorage.getItem('accessToken')) {
+        try {
+            // Uso la API para obtener el estado actual del carrito
+            const carritoData = await fetchAPI('/api/carrito/');
+            actualizarContadorCarritoVisual(carritoData);
+        } catch (error) {
+            console.log("No se pudo cargar contador inicial (quizás no logueado o error API).");
+            actualizarContadorCarritoVisual(null); // Pone 0
+        }
+    } else {
+         actualizarContadorCarritoVisual(null); // Pone 0 si no hay token
     }
   }
-  
-  // Función para filtrar productos por categoría
-  function filtrarPorCategoria(categoriaId) {
-    const productos = document.querySelectorAll('.producto');
-    
-    productos.forEach(producto => {
-      const categoriasProducto = producto.getAttribute('data-categorias').split(',');
-      
-      if (categoriaId === 'todos' || categoriasProducto.includes(categoriaId)) {
-        producto.style.display = 'block';
-      } else {
-        producto.style.display = 'none';
+
+  // --- Lógica Principal (Agregar al carrito) ---
+  async function manejarClickAgregarCarrito(event) {
+      const boton = event.currentTarget;
+      const productoId = boton.getAttribute('data-producto-id');
+      // Ajusto para buscar el input dentro del contenedor .card o .producto
+      const contenedor = boton.closest('.card') || boton.closest('.producto');
+      // Ajusto el selector para ID 
+      const inputCantidad = contenedor ? contenedor.querySelector('input[type="number"][id^="cantidad-"]') : null;
+
+      if (!productoId) {
+          mostrarNotificacion('Error: No se encontró el ID del producto.', 'error');
+          return;
       }
-    });
+
+      const cantidad = inputCantidad ? parseInt(inputCantidad.value, 10) : 1;
+
+      if (isNaN(cantidad) || cantidad < 1) {
+          mostrarNotificacion('Cantidad inválida. Debe ser 1 o más.', 'error');
+          if(inputCantidad) inputCantidad.value = 1;
+          return;
+      }
+
+      boton.disabled = true;
+      const textoOriginal = boton.innerHTML; // Guardo el contenido HTML 
+      boton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agregando...'; 
+
+      try {
+          const resultado = await fetchAPI('/api/carrito/agregar/', {
+              method: 'POST',
+              body: JSON.stringify({
+                  producto_id: productoId,
+                  cantidad: cantidad
+              })
+          });
+
+          // La API ahora devuelve el carrito completo en la clave 'carrito'
+          if (resultado.carrito) {
+              actualizarContadorCarritoVisual(resultado.carrito);
+               // Muestro el mensaje devuelto por la API
+               mostrarNotificacion(resultado.mensaje, resultado.stock_limitado ? 'warning' : 'success');
+          } else {
+               // Si no devuelve carrito, muestro mensaje genérico pero intento recargar contador
+               mostrarNotificacion(resultado.mensaje || 'Producto agregado.', 'success');
+               cargarContadorInicial(); // Intento recargar por si acaso
+          }
+
+      } catch (error) {
+          console.error('Error al agregar al carrito:', error);
+          // Muestro el mensaje de error específico que lanzó fetchAPI
+          mostrarNotificacion(error.message || 'Error al agregar producto.', 'error');
+          if (error.message.includes("Autenticación")) {
+              
+          }
+      } finally {
+          boton.disabled = false;
+          boton.innerHTML = textoOriginal; 
+      }
   }
-  
-  // Selecciono todos los botones "Agregar al carrito"
-  const btnsAgregarCarrito = document.querySelectorAll('.btn-secundario');
-  
-  // Asigno el evento click a cada botón
+
+  // --- Inicialización ---
+  const btnsAgregarCarrito = document.querySelectorAll('button[data-producto-id]');
   btnsAgregarCarrito.forEach(btn => {
-    btn.addEventListener('click', manejarClickAgregarCarrito);
+      btn.addEventListener('click', manejarClickAgregarCarrito);
   });
+
   
-  // Cargo las imágenes de forma dinámica
-  cargarImagenesDinamicas();
-  
-  // Inicializo el buscador
-  inicializarBuscador();
-  
-  // Actualizo el contador del carrito
-  actualizarContadorCarrito();
-  
-  // Compruebo si hay filtros de categoría en la URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const categoriaFiltro = urlParams.get('categoria');
-  
-  if (categoriaFiltro) {
-    filtrarPorCategoria(categoriaFiltro);
-  }
-});
+
+  cargarContadorInicial(); 
+}); 

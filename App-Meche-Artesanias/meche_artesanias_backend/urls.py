@@ -8,13 +8,13 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('api/usuarios/', include('usuarios.urls')),
-<<<<<<< HEAD
+
     path('api/', include('usuarios.urls')),
-=======
+
     path('', include('productos.urls')),
     
     
->>>>>>> origin/JHAN/backend
+
 ]
     
 

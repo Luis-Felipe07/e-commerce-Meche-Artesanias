@@ -1,274 +1,245 @@
-// Obtengo referencia al formulario y a los elementos que voy a manipular
+// Obtuve las referencias a los elementos que necesito del HTML.
 const formulario = document.getElementById('formularioRegistro');
 const mensajeExito = document.getElementById('mensajeExito');
 const mensajeNoCoinciden = document.getElementById('mensajeNoCoinciden');
 
-// URL para la API de registro
-// Compañero en el backend Debe crear un endpoint para el registro de usuarios en  Django
-// Por ejemplo: '/api/registrar-usuario/' o similar
-const API_URL_REGISTRO = 'http://127.0.0.1:8000/api/registrar-usuario/';
+// Esta es la URL correcta de la API para registrar usuarios.
+const API_URL_REGISTRO = 'http://127.0.0.1:8000/api/usuarios/registrar-usuario/';
 
-// Esta función comprueba si las contraseñas coinciden
+// Verifico si las contraseñas coinciden.
 function verificarContraseñas() {
-  const password = document.getElementById('password').value;
-  const confirmarPassword = document.getElementById('confirmarPassword').value;
-  
+  const passwordInput = document.getElementById('password');
+  const confirmarPasswordInput = document.getElementById('confirmarPassword');
+  const password = passwordInput.value;
+  const confirmarPassword = confirmarPasswordInput.value;
+
   if (password !== confirmarPassword) {
     mensajeNoCoinciden.style.display = 'block';
-    document.getElementById('confirmarPassword').classList.add('campo-error');
+    confirmarPasswordInput.classList.add('campo-error');
     return false;
   } else {
     mensajeNoCoinciden.style.display = 'none';
-    document.getElementById('confirmarPassword').classList.remove('campo-error');
+    confirmarPasswordInput.classList.remove('campo-error');
     return true;
   }
 }
 
-// Esta función valida un campo específico del formulario
-function validarCampo(campo, errorId, validacion) {
+// Valido un campo individual del formulario.
+function validarCampo(campo, errorId, validacionFn) {
   const valorCampo = campo.value.trim();
-  const mensajeError = document.getElementById(errorId);
-  
-  if (!validacion(valorCampo)) {
+  const mensajeErrorElemento = document.getElementById(errorId);
+
+  if (!validacionFn(valorCampo)) {
     campo.classList.add('campo-error');
-    mensajeError.style.display = 'block';
+    if (mensajeErrorElemento) mensajeErrorElemento.style.display = 'block';
     return false;
   } else {
     campo.classList.remove('campo-error');
-    mensajeError.style.display = 'none';
+    if (mensajeErrorElemento) mensajeErrorElemento.style.display = 'none';
     return true;
   }
 }
 
-// Valido el correo electrónico con una expresión regular
+// Valido si el email tiene un formato correcto.
 function validarEmail(email) {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 }
 
-// Función para enviar los datos al backend
-// Compañero  Esta función hará la petición POST a el endpoint de registro
+// Envío los datos del usuario al backend.
 async function enviarDatosAlBackend(datosUsuario) {
   try {
-    // Compañero Verifique que su endpoint acepte peticiones POST y que reciba estos campos
     const respuesta = await fetch(API_URL_REGISTRO, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Compañero Si en el backend usa CSRF en Django, necesitará incluir el token aquí
-        // 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
       },
       body: JSON.stringify(datosUsuario)
     });
-     
-    const data = await respuesta.json();
-    console.log(data);
-    
-    // Compañero Asegúrese de devolver códigos de estado apropiados y un JSON con mensajes claros
+
+    let data = {};
+    try {
+      if (respuesta.status !== 204) { // Solo parseo si hay contenido
+        data = await respuesta.json();
+      }
+    } catch (e) {
+      console.warn("Respuesta no es JSON o está vacía.", respuesta.status, e);
+      if (!respuesta.ok) {
+        const errorText = await respuesta.text().catch(() => `Error ${respuesta.status}`);
+        data = { errorInterno: true, mensaje: errorText };
+      } else {
+        data = {};
+      }
+    }
+
+    console.log("Respuesta backend:", respuesta.status, data);
+
     if (respuesta.ok) {
-      const datos = await respuesta.json();
-      return { 
-        exito: true, 
-        mensaje: datos.mensaje || 'Registro exitoso',
-        datos: datos
+      return {
+        exito: true,
+        mensaje: data.mensaje || 'Registro exitoso',
+        datos: data
       };
     } else {
-      // Si el servidor responde con un error (ej. 400, 500)
-      const errorData = await respuesta.json();
-      return { 
-        exito: false, 
-        mensaje: errorData.mensaje || 'Error en el registro',
-        errores: errorData.errores
+      return {
+        exito: false,
+        mensaje: data.mensaje || data.error || data.detail || `Error en el registro (${respuesta.status})`,
+        errores: data.errores
       };
     }
   } catch (error) {
-    console.error('Error al enviar datos:', error);
-    return { 
-      exito: false, 
-      mensaje: 'Error de conexión con el servidor'
+    console.error('Error en fetch:', error);
+    return {
+      exito: false,
+      mensaje: 'Error de conexión con el servidor.'
     };
   }
 }
 
-// Función para mostrar errores devueltos por el backend
-// Compañero  la API debería devolver errores en formato JSON con el campo específico que falló
+// Muestro los errores específicos que devuelve el backend.
 function mostrarErroresDelBackend(errores) {
-  
-  for (const campo in errores) {
-    const mensajeError = errores[campo];
-    const elementoCampo = document.getElementById(campo);
-    
-    if (elementoCampo) {
-      elementoCampo.classList.add('campo-error');
-      
-      // Intento encontrar el elemento de mensaje de error para este campo
-      const errorId = 'error' + campo.charAt(0).toUpperCase() + campo.slice(1);
-      const mensajeErrorElement = document.getElementById(errorId);
-      
-      if (mensajeErrorElement) {
-        mensajeErrorElement.textContent = mensajeError;
-        mensajeErrorElement.style.display = 'block';
-      }
+    limpiarTodosLosErrores();
+    for (const campo in errores) {
+        const elementoCampo = formulario.elements[campo];
+        const mensajeError = Array.isArray(errores[campo]) ? errores[campo].join(' ') : errores[campo];
+
+        if (elementoCampo) {
+            elementoCampo.classList.add('campo-error');
+            let errorId;
+            if (campo === 'confirmar_password') {
+                 errorId = 'errorConfirmarPassword';
+            } else {
+                 const nombreCampoCapitalizado = campo.replace(/_([a-z])/g, (match, p1) => p1.toUpperCase());
+                 errorId = 'error' + nombreCampoCapitalizado.charAt(0).toUpperCase() + nombreCampoCapitalizado.slice(1);
+            }
+            const mensajeErrorElemento = document.getElementById(errorId);
+            if (mensajeErrorElemento) {
+                mensajeErrorElemento.textContent = mensajeError;
+                mensajeErrorElemento.style.display = 'block';
+            } else {
+                console.warn(`No encontré elemento de error ID: ${errorId} para campo ${campo}`);
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'mensaje-error fallback-error';
+                errorDiv.style.cssText = 'color: red; font-size: 12px;';
+                errorDiv.textContent = mensajeError;
+                elementoCampo.parentNode.insertBefore(errorDiv, elementoCampo.nextSibling);
+            }
+        } else {
+             console.warn(`Error no asociado a campo: ${campo} - ${mensajeError}`);
+             mostrarErrorGeneral(mensajeError);
+        }
     }
-  }
 }
 
-// Manejador de evento para validar el formulario completo
+// Limpio todos los mensajes de error del formulario.
+function limpiarTodosLosErrores() {
+    formulario.querySelectorAll('.campo-error').forEach(el => el.classList.remove('campo-error'));
+    formulario.querySelectorAll('.mensaje-error').forEach(el => {
+        if (!el.id || el.id !== 'mensajeNoCoinciden') {
+            el.style.display = 'none';
+            el.textContent = '';
+        }
+    });
+    formulario.querySelectorAll('.fallback-error, .general-error-message').forEach(el => el.remove());
+}
+
+// Muestro un error general arriba del formulario.
+function mostrarErrorGeneral(mensaje) {
+     if (formulario.querySelector('.general-error-message')) return; // Evito duplicados
+     const mensajeErrorGeneral = document.createElement('div');
+     mensajeErrorGeneral.className = 'mensaje-error general-error-message';
+     mensajeErrorGeneral.textContent = mensaje;
+     mensajeErrorGeneral.style.cssText = 'color: red; background-color: rgba(255, 0, 0, 0.1); border: 1px solid red; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;';
+     formulario.prepend(mensajeErrorGeneral);
+     setTimeout(() => { mensajeErrorGeneral.remove(); }, 7000);
+}
+
+// Manejo el envío (submit) del formulario.
 formulario.addEventListener('submit', async function(evento) {
-  evento.preventDefault(); 
-  
-  // Valido cada campo del formulario
-  const nombreValido = validarCampo(
-    document.getElementById('nombre'),
-    'errorNombre',
-    valor => valor.length > 0
-  );
-  
-  const apellidoValido = validarCampo(
-    document.getElementById('apellido'),
-    'errorApellido',
-    valor => valor.length > 0
-  );
-  
-  const tipoDocumentoValido = validarCampo(
-    document.getElementById('tipoDocumento'),
-    'errorTipoDocumento',
-    valor => valor !== ""
-  );
-  
-  const numeroDocumentoValido = validarCampo(
-    document.getElementById('numeroDocumento'),
-    'errorNumeroDocumento',
-    valor => valor.length > 5
-  );
-  
-  const emailValido = validarCampo(
-    document.getElementById('email'),
-    'errorEmail',
-    validarEmail
-  );
-  
-  const passwordValido = validarCampo(
-    document.getElementById('password'),
-    'errorPassword',
-    valor => valor.length >= 8
-  );
-  
-  // Verifico si las contraseñas coinciden
-  const contraseñasCoinciden = verificarContraseñas();
-  
-  // Si todo es válido, procedo con el registro
-  if (nombreValido && apellidoValido && tipoDocumentoValido && 
-      numeroDocumentoValido && emailValido && passwordValido && contraseñasCoinciden) {
-    
-    // Preparo los datos para enviar al backend
-    // Compañero Estos son los campos que enviaremos desde el frontend, asegúrate de procesarlos correctamente
+  evento.preventDefault();
+  limpiarTodosLosErrores();
+
+  // Valido todos los campos del frontend primero.
+  const esValido = [
+    validarCampo(formulario.elements['nombre'], 'errorNombre', v => v.length > 0),
+    validarCampo(formulario.elements['apellido'], 'errorApellido', v => v.length > 0),
+    validarCampo(formulario.elements['tipo_documento'], 'errorTipoDocumento', v => v !== ""),
+    validarCampo(formulario.elements['numero_documento'], 'errorNumeroDocumento', v => v.length > 5),
+    validarCampo(formulario.elements['email'], 'errorEmail', validarEmail),
+    validarCampo(formulario.elements['password'], 'errorPassword', v => v.length >= 8),
+    verificarContraseñas()
+  ].every(v => v === true);
+
+  if (esValido) {
+    // Si pasa validación frontend, preparo los datos.
     const datosUsuario = {
-      nombre: document.getElementById('nombre').value.trim(),
-      apellido: document.getElementById('apellido').value.trim(),
-      tipo_documento: document.getElementById('tipoDocumento').value,
-      numero_documento: document.getElementById('numeroDocumento').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      password: document.getElementById('password').value
-      
-      // No envío confirmarPassword porque ya validé que coincide con password
+      nombre: formulario.elements['nombre'].value.trim(),
+      apellido: formulario.elements['apellido'].value.trim(),
+      tipo_documento: formulario.elements['tipo_documento'].value,
+      numero_documento: formulario.elements['numero_documento'].value.trim(),
+      email: formulario.elements['email'].value.trim(),
+      password: formulario.elements['password'].value
     };
-    
-    // Muestro algún indicador de carga 
-    const btnRegistro = document.querySelector('.btn-registrarse');
-    const textoOriginal = btnRegistro.textContent;
+
+    const btnRegistro = formulario.querySelector('.btn-registrarse');
+    const textoOriginalBtn = btnRegistro.textContent;
     btnRegistro.textContent = 'Registrando...';
     btnRegistro.disabled = true;
-    
-    // Envío los datos al backend
+
+    // Envío al backend.
     const resultado = await enviarDatosAlBackend(datosUsuario);
-    
-    // Restauro el botón
-    btnRegistro.textContent = textoOriginal;
+
+    btnRegistro.textContent = textoOriginalBtn;
     btnRegistro.disabled = false;
-    
+
     if (resultado.exito) {
-      // Si el registro fue exitoso
-      mensajeExito.textContent = resultado.mensaje || '¡Registro exitoso! Redirigiendo al inicio de sesión...';
+      mensajeExito.textContent = resultado.mensaje || '¡Registro exitoso! Redirigiendo...';
       mensajeExito.style.display = 'block';
-      
-      // Compañero en el backend Se debe redirigir a otra URL la del login después del registro, puedes devolverla en el JSON
-      const urlRedireccion = resultado.datos?.urlRedireccion || 'index-login.html';
-      
-      // Después de un tiempo, redirijo al usuario a la página de login
-      setTimeout(() => {
-        window.location.href = urlRedireccion;
-      }, 3000); // Redirijo después de 3 segundos
+      // Redirijo al login (asegúrate que '/login/' exista en tus urls.py).
+      const urlRedireccion = resultado.datos?.urlRedireccion || '/login/';
+      setTimeout(() => { window.location.href = urlRedireccion; }, 2500);
     } else {
-      // Si hubo errores en el backend
+      // Muestro errores del backend.
       if (resultado.errores) {
-        // Si el backend devolvió errores específicos para campos
         mostrarErroresDelBackend(resultado.errores);
-      } else {
-        // Si es un error general
-        // Compañero en el backend Cree un div para errores generales en el HTML si no existe
-        const mensajeErrorGeneral = document.createElement('div');
-        mensajeErrorGeneral.className = 'mensaje-error general';
-        mensajeErrorGeneral.textContent = resultado.mensaje;
-        mensajeErrorGeneral.style.color = 'red';
-        mensajeErrorGeneral.style.marginBottom = '15px';
-        formulario.prepend(mensajeErrorGeneral);
-        
-        // Lo elimino después de 5 segundos
-        setTimeout(() => {
-          mensajeErrorGeneral.remove();
-        }, 5000);
       }
+      mostrarErrorGeneral(resultado.mensaje || 'Ocurrió un error durante el registro.');
     }
+  } else {
+      console.log("Validación frontend falló.");
+      mostrarErrorGeneral("Por favor, revisa los campos marcados.");
   }
 });
 
-// Añado validación en tiempo real cuando el usuario cambia entre campos
+// --- Validaciones en tiempo real ---
+
 document.getElementById('confirmarPassword').addEventListener('input', verificarContraseñas);
-
-// También  agrego validaciones en tiempo real para otros campos
 document.getElementById('password').addEventListener('input', function() {
-  validarCampo(
-    this, 
-    'errorPassword', 
-    valor => valor.length >= 8
-  );
+  validarCampo(this, 'errorPassword', valor => valor.length >= 8);
 });
-
 document.getElementById('email').addEventListener('input', function() {
-  validarCampo(
-    this,
-    'errorEmail',
-    validarEmail
-  );
+  validarCampo(this, 'errorEmail', validarEmail);
 });
 
-// Limpio los mensajes de error cuando el usuario comienza a escribir en un campo
-document.querySelectorAll('input, select').forEach(campo => {
-  campo.addEventListener('focus', function() {
-    this.classList.remove('campo-error');
-    const errorId = 'error' + this.id.charAt(0).toUpperCase() + this.id.slice(1);
-    const mensajeError = document.getElementById(errorId);
-    if (mensajeError) {
-      mensajeError.style.display = 'none';
-    }
-  });
+// Limpio errores al interactuar con un campo.
+Object.values(formulario.elements).forEach(campo => {
+    campo.addEventListener('input', function() {
+        let errorId = '';
+        if (this.name === 'confirmarPassword') { errorId = 'errorConfirmarPassword'; }
+        else if (this.name) {
+             const nombreCampoCapitalizado = this.name.replace(/_([a-z])/g, (_, p1) => p1.toUpperCase());
+             errorId = 'error' + nombreCampoCapitalizado.charAt(0).toUpperCase() + nombreCampoCapitalizado.slice(1);
+        }
+        const mensajeErrorElemento = document.getElementById(errorId);
+        if (mensajeErrorElemento && mensajeErrorElemento.style.display !== 'none') {
+             this.classList.remove('campo-error');
+             mensajeErrorElemento.style.display = 'none';
+             mensajeErrorElemento.textContent = '';
+        }
+         const fallbackError = this.parentNode.querySelector('.fallback-error');
+         if (fallbackError) { fallbackError.remove(); this.classList.remove('campo-error'); }
+         const generalError = formulario.querySelector('.general-error-message');
+         if (generalError) { generalError.remove(); }
+         if (this.id === 'confirmarPassword') { mensajeNoCoinciden.style.display = 'none'; }
+    });
 });
-
-// Verifico la conexión con el backend al cargar la página (opcional)
-// Compañero aqui debe Crear un endpoint simple para verificar que la API está disponible
-async function verificarConexion() {
-  try {
-    const respuesta = await fetch('/api/status/');
-    if (respuesta.ok) {
-      console.log('Conexión con el backend establecida correctamente');
-    } else {
-      console.error('El backend está disponible pero devolvió un error');
-    }
-  } catch (error) {
-    console.error('No se puede conectar con el backend:', error);
-  }
-}
-
-// Descomentar esta línea si quieres verificar la conexión al cargar la página
-// window.addEventListener('load', verificarConexion);

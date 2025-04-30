@@ -5,87 +5,82 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mech Artesanal - Tienda</title>
-  <!-- Incluyo la hoja de estilos específica para la página de tienda -->
   <link rel="stylesheet" href="{% static 'Estilos-Css/Estilos-Tienda.css' %}">
-  <!-- Incluyo Font Awesome para iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- Barra superior con información de contacto y redes sociales -->
   <div class="barra-superior">
     <div class="contenedor">
       <div class="contacto-info">
-        <!-- En este enlace muestro el teléfono -->
         <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
         <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
       </div>
       <div class="redes-sociales">
-        <!-- Enlace a redes sociales -->
         <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="{% url 'login' %}" target="_blank"><i class="fas fa-user"></i></a>
+        {# Aquí podría ir un enlace de login/usuario si lo necesito #}
+         <a href="{% url 'login' %}"><i class="fas fa-user"></i></a>
       </div>
     </div>
   </div>
 
-  <!-- Encabezado con logo, buscador y navegación -->
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="{% url 'bienvenida' %}">
+        <a href="{% url 'pgbienvenida' %}">
           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
-      
+
       <div class="buscador">
         <form action="{% url 'buscar_productos' %}" method="get">
-          <!-- En este input permito que el usuario busque productos -->
           <input type="text" name="q" placeholder="Buscar">
           <button type="button" id="cerrarBusqueda" class="btn-cerrar">&times;</button>
         </form>
       </div>
-      
+
       <nav class="navegacion">
         <ul>
-          <li><a href="{% url 'bienvenida' %}">Inicio</a></li>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
           <li><a href="{% url 'tienda' %}">Tienda</a></li>
           <li><a href="{% url 'nosotros' %}">¿Quiénes Somos?</a></li>
           <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
         </ul>
       </nav>
-      
+
       <div class="carrito">
         <a href="{% url 'carrito' %}">
           <i class="fas fa-shopping-cart"></i>
           <span class="contador-carrito" id="contador-carrito">
-            {% if num_productos %}{{ num_productos }}{% endif %}
+            {# El contador se actualizará con JavaScript #}
+            {% comment %} {% if num_productos %}{{ num_productos }}{% endif %} {% endcomment %}
           </span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Sección principal de la tienda -->
   <main class="tienda">
     <div class="contenedor">
       <h1>Nuestra Tienda</h1>
-      <p>Descubre nuestra colección completa de mochilas artesanales.</p>
+      <p>Descubre mi colección completa de mochilas artesanales.</p>
 
-      <!-- Aquí muestro las categorías disponibles -->
       {% for categoria in categorias %}
         <h2>{{ categoria.nombre }}</h2>
         <section class="productos-grid">
           {% for producto in productos %}
             {% if producto.categoria == categoria %}
-              <!-- Producto dinámico -->
               <div class="producto" data-id="{{ producto.id }}">
                 {% if producto.imagen %}
                   <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
                 {% else %}
+                  {# Uso una imagen por defecto si no tengo una específica #}
                   <img src="{% static 'Img/producto-default.jpg' %}" alt="{{ producto.nombre }}">
                 {% endif %}
                 <h3>{{ producto.nombre }}</h3>
-                <p>${{ producto.precio|floatformat:0 }}</p>
+                <p>${{ producto.precio|floatformat:0 }}</p> {# Muestro el precio sin decimales #}
+
+                {# Dejo el selector de método de pago, aunque mi API actual no lo usa al agregar #}
                 <div class="metodos-pago">
                   <label for="pago-{{ producto.id }}">Método de pago:</label>
                   <select id="pago-{{ producto.id }}" class="selector-pago">
@@ -95,24 +90,33 @@
                     {% endfor %}
                   </select>
                 </div>
-                <button class="btn-secundario" data-producto-id="{{ producto.id }}">Agregar al carrito</button>
+
+                {# -------- CORRECCIÓN AQUÍ -------- #}
+                {# Quito el form y uso un div con input y botón para JS #}
+                <div style="display: flex; align-items: center; gap: 10px; padding: 0 15px 15px;">
+                    {# Input para la cantidad, con ID único #}
+                    <input type="number" id="cantidad-{{ producto.id }}" name="cantidad" value="1" min="1" style="width: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; text-align: center;" />
+                    {# Botón que activará mi JavaScript #}
+                    <button type="button" class="btn-secundario" data-producto-id="{{ producto.id }}">Agregar al carrito</button>
+                </div>
+                {# -------- FIN CORRECCIÓN -------- #}
+
               </div>
             {% endif %}
           {% empty %}
             <div class="sin-productos">
-              <p>No hay productos disponibles en esta categoría.</p>
+              <p>No tengo productos disponibles en esta categoría.</p>
             </div>
           {% endfor %}
         </section>
       {% empty %}
         <div class="sin-categorias">
-          <p>No hay categorías disponibles en este momento.</p>
+          <p>No tengo categorías disponibles en este momento.</p>
         </div>
       {% endfor %}
     </div>
   </main>
 
-  <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="contenedor">
       <div class="columnas-footer">
@@ -139,7 +143,7 @@
           <h3>NUESTRAS MOCHILAS</h3>
           <ul>
             <li><a href="{% url 'tienda' %}">Tienda</a></li>
-            <li><a href="{% url 'bienvenida' %}#destacados">Productos Destacados</a></li>
+            <li><a href="{% url 'pgbienvenida' %}#destacados">Productos Destacados</a></li>
           </ul>
         </div>
 
@@ -159,14 +163,13 @@
     </div>
   </footer>
 
-  <!-- Token CSRF para peticiones AJAX seguras en Django -->
+  {# Aquí paso el token CSRF a mi JavaScript para usarlo en solicitudes Ajax #}
   {% csrf_token %}
   <script>
-    // Paso el token CSRF a JavaScript para usarlo en solicitudes Ajax
-    const csrfToken = "{{ csrf_token }}";
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
   </script>
 
-  <!-- Incluyo el archivo JS propio para la tienda -->
+  {# Incluyo mi archivo JS propio para la tienda #}
   <script src="{% static 'Archivos-Js/tienda.js' %}"></script>
 </body>
 </html>

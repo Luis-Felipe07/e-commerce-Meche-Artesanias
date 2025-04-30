@@ -6,14 +6,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mech Artesanal - Mochilas Artesanales</title>
-  <!-- Hoja de estilos principal -->
-  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/Estilos-pgbienvenida.css">
-  <!-- Iconos de Font Awesome -->
+  <link rel="stylesheet" href="{% static 'Estilos-Css/Estilos-pgbienvenida.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-  <!-- Barra superior con información de contacto y redes sociales -->
   <div class="barra-superior">
     <div class="contenedor">
       <div class="contacto-info">
@@ -28,7 +25,6 @@
     </div>
   </div>
 
-  <!-- Encabezado con logo, búsqueda y navegación -->
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
@@ -36,32 +32,29 @@
           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
-
       <div class="buscador">
-        <form action="#" method="get">
-          <input type="text" placeholder="Buscar" id="buscar">
+        <form action="{% url 'buscar_productos' %}" method="get">
+          <input type="text" name="q" placeholder="Buscar" id="buscar">
           <button type="button" class="btn-cerrar" id="cerrarBusqueda">&times;</button>
         </form>
       </div>
-
       <nav class="navegacion">
         <ul>
           <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
           <li><a href="{% url 'tienda' %}">Tienda</a></li>
-          <li><a href="{% url 'nosotros' % " target="_blank">¿Quiénes Somos?</a></li>
+          <li><a href="{% url 'nosotros' %}" target="_blank">¿Quiénes Somos?</a></li>
           <li><a href="#contacto">Contáctanos</a></li>
         </ul>
       </nav>
-
       <div class="carrito">
         <a href="{% url 'carrito' %}" target="_blank">
           <i class="fas fa-shopping-cart"></i>
+          <span class="contador-carrito" id="contador-carrito"></span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Sección hero  -->
   <section class="hero-alt">
     <img src="{% static 'Img/mochila-colgando.jpeg' %}" alt="Fondo natural">
     <div class="mochilas-flotantes">
@@ -77,80 +70,107 @@
     </div>
   </section>
 
-  <!-- Sección de destacados -->
   <section class="destacados" id="destacados">
     <div class="contenedor">
       <h2>Productos Destacados</h2>
       <div class="productos-grid">
+
+        {# --- Producto Destacado 1 (Estático con métodos de pago dinámicos) --- #}
         <div class="producto">
           <img src="{% static 'Img/mochila.png' %}" alt="Mochila Wayuu">
           <h3>Mochila Wayuu</h3>
-          <p>$180.000</p>
+          <p class="precio">$180000</p> {# Precio estático #}
           <div class="metodos-pago">
-            <label for="pago-1">Método de pago:</label>
-            <select id="pago-1">
+            <label for="pago-destacado-1">Método de pago:</label>
+            <select id="pago-destacado-1">
               <option value="">-- Seleccione --</option>
-              <option value="nequi">Nequi</option>
-              <option value="bancolombia">Bancolombia</option>
-              <option value="davivienda">Davivienda</option>
-              <option value="pse">PSE</option>
+              {% for metodo in metodos_pago %}
+                <option value="{{ metodo.id }}">{{ metodo.nombre }}</option>
+              {% empty %}
+                <option value="">No hay métodos</option>
+              {% endfor %}
             </select>
           </div>
-          <button class="btn-secundario">Agregar al carrito</button>
+          <div class="producto-acciones">
+             <input type="number" id="cantidad-destacado-1" value="1" min="1" />
+             {# Reemplaza '0' con el ID real si este producto existe en la BD #}
+             <button type="button" class="btn-secundario" data-producto-id="0">Agregar al carrito</button>
+          </div>
         </div>
+
+        {# --- Producto Destacado 2 --- #}
         <div class="producto">
-          <img src="{% static 'Img/mochila2.jpg' %}" alt="Mochila Arhuaca">
-          <h3>Mochila Arhuaca</h3>
-          <p>$210.000</p>
-          <div class="metodos-pago">
-            <label for="pago-2">Método de pago:</label>
-            <select id="pago-2">
-              <option value="">-- Seleccione --</option>
-              <option value="nequi">Nequi</option>
-              <option value="bancolombia">Bancolombia</option>
-              <option value="davivienda">Davivienda</option>
-              <option value="pse">PSE</option>
-            </select>
-          </div>
-          <button class="btn-secundario">Agregar al carrito</button>
+            <img src="{% static 'Img/mochila2.jpg' %}" alt="Mochila Arhuaca">
+            <h3>Mochila Arhuaca</h3>
+            <p class="precio">$210000</p>
+             <div class="metodos-pago">
+                 <label for="pago-destacado-2">Método de pago:</label>
+                 <select id="pago-destacado-2">
+                     <option value="">-- Seleccione --</option>
+                     {% for metodo in metodos_pago %}
+                       <option value="{{ metodo.id }}">{{ metodo.nombre }}</option>
+                     {% empty %}
+                       <option value="">No hay métodos</option>
+                     {% endfor %}
+                 </select>
+             </div>
+             <div class="producto-acciones">
+                 <input type="number" id="cantidad-destacado-2" value="1" min="1" />
+                  {# Reemplaza '0' con el ID real si este producto existe en la BD #}
+                 <button type="button" class="btn-secundario" data-producto-id="0">Agregar al carrito</button>
+             </div>
         </div>
+
+        {# --- Producto Destacado 3 --- #}
         <div class="producto">
-          <img src="{% static 'Img/mochila3.png' %}" alt="Mochila Kankuama">
-          <h3>Mochila Kankuama</h3>
-          <p>$195.000</p>
-          <div class="metodos-pago">
-            <label for="pago-3">Método de pago:</label>
-            <select id="pago-3">
-              <option value="">-- Seleccione --</option>
-              <option value="nequi">Nequi</option>
-              <option value="bancolombia">Bancolombia</option>
-              <option value="davivienda">Davivienda</option>
-              <option value="pse">PSE</option>
-            </select>
-          </div>
-          <button class="btn-secundario">Agregar al carrito</button>
+            <img src="{% static 'Img/mochila3.png' %}" alt="Mochila Kankuama">
+            <h3>Mochila Kankuama</h3>
+            <p class="precio">$195000</p>
+             <div class="metodos-pago">
+                 <label for="pago-destacado-3">Método de pago:</label>
+                 <select id="pago-destacado-3">
+                     <option value="">-- Seleccione --</option>
+                     {% for metodo in metodos_pago %}
+                       <option value="{{ metodo.id }}">{{ metodo.nombre }}</option>
+                     {% empty %}
+                       <option value="">No hay métodos</option>
+                     {% endfor %}
+                 </select>
+             </div>
+             <div class="producto-acciones">
+                 <input type="number" id="cantidad-destacado-3" value="1" min="1" />
+                  {# Reemplaza '0' con el ID real si este producto existe en la BD #}
+                 <button type="button" class="btn-secundario" data-producto-id="0">Agregar al carrito</button>
+             </div>
         </div>
-        <div class="producto">
-          <img src="{% static 'Img/mochilas.jpeg' %}" alt="Mochila Guane">
-          <h3>Mochila Guane</h3>
-          <p>$220.000</p>
-          <div class="metodos-pago">
-            <label for="pago-4">Método de pago:</label>
-            <select id="pago-4">
-              <option value="">-- Seleccione --</option>
-              <option value="nequi">Nequi</option>
-              <option value="bancolombia">Bancolombia</option>
-              <option value="davivienda">Davivienda</option>
-              <option value="pse">PSE</option>
-            </select>
-          </div>
-          <button class="btn-secundario">Agregar al carrito</button>
+
+         {# --- Producto Destacado 4 --- #}
+         <div class="producto">
+            <img src="{% static 'Img/mochilas.jpeg' %}" alt="Mochila Guane">
+            <h3>Mochila Guane</h3>
+            <p class="precio">$220000</p>
+             <div class="metodos-pago">
+                 <label for="pago-destacado-4">Método de pago:</label>
+                 <select id="pago-destacado-4">
+                     <option value="">-- Seleccione --</option>
+                     {% for metodo in metodos_pago %}
+                       <option value="{{ metodo.id }}">{{ metodo.nombre }}</option>
+                     {% empty %}
+                       <option value="">No hay métodos</option>
+                     {% endfor %}
+                 </select>
+             </div>
+             <div class="producto-acciones">
+                 <input type="number" id="cantidad-destacado-4" value="1" min="1" />
+                  {# Reemplaza '0' con el ID real si este producto existe en la BD #}
+                 <button type="button" class="btn-secundario" data-producto-id="0">Agregar al carrito</button>
+             </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Sección Nuestra Historia -->
   <section class="nuestra-historia">
     <div class="contenedor">
       <div class="historia-contenido">
@@ -165,17 +185,16 @@
     </div>
   </section>
 
-  <!-- Sección de beneficios -->
   <section class="beneficios">
     <div class="contenedor">
-      <div class="beneficio">
+       <div class="beneficio">
         <i class="fas fa-hand-holding-heart"></i>
         <h3>Hecho a Mano</h3>
         <p>Cada pieza es única y elaborada artesanalmente</p>
       </div>
       <div class="beneficio">
         <i class="fas fa-leaf"></i>
-        <h3>Materiales Ecólogicos</h3>
+        <h3>Materiales Ecológicos</h3>
         <p>Utilizamos lana y fique de la más alta calidad</p>
       </div>
       <div class="beneficio">
@@ -191,7 +210,6 @@
     </div>
   </section>
 
-  <!-- Sección de Comentarios -->
   <section class="comentarios">
     <div class="contenedor">
       <h2>Comentarios</h2>
@@ -207,12 +225,10 @@
         <button id="enviarComentario" class="btn-secundario">Enviar Comentario</button>
       </div>
       <div class="lista-comentarios">
-        <!-- Aquí se mostrarán los comentarios enviados -->
-      </div>
+        </div>
     </div>
   </section>
 
-  <!-- Sección de Contacto -->
   <section id="contacto" class="contacto">
     <div class="contenedor">
       <h2>¡Contáctanos!</h2>
@@ -222,21 +238,22 @@
         </div>
         <div class="formulario-contacto">
           <form id="formularioContacto">
+             {% csrf_token %} {# Añade token CSRF si vas a enviar este form con AJAX POST #}
             <div class="campo-formulario">
-              <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" placeholder="Escriba su nombre" required>
+              <label for="nombreContacto">Nombre</label>
+              <input type="text" id="nombreContacto" name="nombre" placeholder="Escriba su nombre" required>
             </div>
             <div class="campo-formulario">
-              <label for="apellido">Apellido</label>
-              <input type="text" id="apellido" placeholder="Escriba su apellido" required>
+              <label for="apellidoContacto">Apellido</label>
+              <input type="text" id="apellidoContacto" name="apellido" placeholder="Escriba su apellido" required>
             </div>
             <div class="campo-formulario">
-              <label for="email">Email</label>
-              <input type="email" id="email" placeholder="ejemplo@gmail.com" required>
+              <label for="emailContacto">Email</label>
+              <input type="email" id="emailContacto" name="email" placeholder="ejemplo@gmail.com" required>
             </div>
             <div class="campo-formulario">
-              <label for="mensaje">Mensaje</label>
-              <textarea id="mensaje" placeholder="Escriba su mensaje" required></textarea>
+              <label for="mensajeContacto">Mensaje</label>
+              <textarea id="mensajeContacto" name="mensaje" placeholder="Escriba su mensaje" required></textarea>
             </div>
             <button type="submit" class="btn-enviar">Enviar</button>
           </form>
@@ -245,7 +262,6 @@
     </div>
   </section>
 
-  <!-- Pie de página -->
   <footer class="pie-pagina">
     <div class="contenedor">
       <div class="columnas-footer">
@@ -260,17 +276,17 @@
         <div class="columna-footer">
           <h3>¿QUIÉNES SOMOS?</h3>
           <ul>
-            <li><a href="nosotros.html#historia">Nuestra Historia</a></li>
-            <li><a href="nosotros.html#mision-vision">¿Cuál es nuestra misión?</a></li>
-            <li><a href="nosotros.html#mision-vision">¿Cuál es nuestra visión?</a></li>
-            <li><a href="nosotros.html#objetivos">Objetivos Institucionales</a></li>
+            <li><a href="{% url 'nosotros' %}#historia">Nuestra Historia</a></li>
+            <li><a href="{% url 'nosotros' %}#mision-vision">¿Cuál es nuestra misión?</a></li>
+            <li><a href="{% url 'nosotros' %}#mision-vision">¿Cuál es nuestra visión?</a></li>
+            <li><a href="{% url 'nosotros' %}#objetivos">Objetivos Institucionales</a></li>
           </ul>
         </div>
         <div class="columna-footer">
           <h3>NUESTRAS MOCHILAS</h3>
           <ul>
             <li><a href="{% url 'tienda' %}">Tienda</a></li>
-            <li><a href="pgbienvenida.html#destacados">Productos Destacados</a></li>
+            <li><a href="#destacados">Productos Destacados</a></li>
           </ul>
         </div>
         <div class="columna-footer">
@@ -283,13 +299,17 @@
         </div>
       </div>
       <div class="derechos">
-        <p>&copy; 2025 Mech Artesanal. Todos los derechos reservados.</p>
+        <p>&copy; {% now "Y" %} Mech Artesanal. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
 
-  <script src="/App-Meche-Artesanias/static/Archivos-Js/script-pgbienvenida.js"></script>
+   {# Aquí paso el token CSRF a mi JavaScript para usarlo en solicitudes Ajax #}
+  {% csrf_token %}
+  <script>
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]') ? document.querySelector('[name=csrfmiddlewaretoken]').value : '';
+  </script>
+  <script src="{% static 'Archivos-Js/script-pgbienvenida.js' %}"></script>
 
 </body>
-
 </html>

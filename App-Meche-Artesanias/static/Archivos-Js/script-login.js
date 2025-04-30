@@ -30,7 +30,7 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
       localStorage.setItem("tokenExpiration", expiresAt.toISOString());
 
       // Redirige al dashboard del usuario
-      window.location.href = "dashboard.html";
+      window.location.href = "/dashboard/";
     } else {
       mensajeError.textContent = data.error || "Usuario o contraseña incorrectos.";
     }

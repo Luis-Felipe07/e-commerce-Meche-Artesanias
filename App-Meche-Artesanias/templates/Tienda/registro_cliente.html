@@ -1,13 +1,14 @@
-{% load static %}
+{% load static %} {# Asegúrate de que esta línea esté al principio #}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mech Artesanal - Registro de Usuario</title>
-  
-  <link rel="stylesheet" href="/App-Meche-Artesanias/static/Estilos-Css/registro-cliente.css">
-  <!-- Iconos de Font Awesome -->
+
+  {# --- CORRECCIÓN AQUÍ --- #}
+  <link rel="stylesheet" href="{% static 'Estilos-Css/registro-cliente.css' %}">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -40,18 +41,18 @@
 
           <div class="campo-formulario">
             <label for="tipoDocumento">Tipo de Documento</label>
-            <select id="tipoDocumento" name="tipoDocumento" required>
+            <select id="tipoDocumento" name="tipo_documento" required> {# Cambiado name a tipo_documento para coincidir con modelo/API #}
               <option value="">-- Seleccione --</option>
               <option value="cc">Cédula de Ciudadanía</option>
               <option value="ce">Cédula de Extranjería</option>
-              <option value="pasaporte">Tarjeta de Identidad</option>
+              <option value="pasaporte">Tarjeta de Identidad</option> {# Ajustar value si es necesario #}
             </select>
             <div class="mensaje-error" id="errorTipoDocumento">Por favor selecciona un tipo de documento</div>
           </div>
 
           <div class="campo-formulario">
             <label for="numeroDocumento">Número de Documento</label>
-            <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+            <input type="text" id="numeroDocumento" name="numero_documento" placeholder="Ingresa tu número de documento" required> {# Cambiado name a numero_documento #}
             <div class="mensaje-error" id="errorNumeroDocumento">Por favor ingresa un número de documento válido</div>
           </div>
 
@@ -77,13 +78,14 @@
         </form>
 
         <div class="usuario-existente">
-          <p>¿Ya tienes una cuenta? <a href="/App-Meche-Artesanias/static/index-login.html">Iniciar Sesión</a></p>
+          {# Usando la etiqueta url para el enlace de login si está definida #}
+          <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar Sesión</a></p>
         </div>
       </div>
     </div>
   </section>
 
   
-  <script src="/App-Meche-Artesanias/static/Archivos-Js/registro-cliente.js"></script>
+  <script src="{% static 'Archivos-Js/registro-cliente.js' %}"></script>
 </body>
 </html>

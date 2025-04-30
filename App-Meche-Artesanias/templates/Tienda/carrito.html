@@ -3,51 +3,148 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Carrito de Compras</title>
-  <link rel="stylesheet" href="{% static 'Estilos-Css/carrito.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras - Mech Artesanal</title>
+  {# Enlazo los CSS necesarios, incluyendo el específico del carrito #}
+  <link rel="stylesheet" href="{% static 'Estilos-Css/Estilos-pgbienvenida.css' %}"> {# Estilos base #}
+  <link rel="stylesheet" href="{% static 'Estilos-Css/carrito.css' %}"> {# Estilos del carrito #}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+    /* Estilos adicionales para mejorar la apariencia de la carga y mensajes */
+    .carrito-vacio, .cargando-carrito {
+      text-align: center;
+      padding: 50px 20px;
+      color: #6c757d; /* Un gris suave */
+      font-size: 1.1rem;
+    }
+    .cargando-carrito i {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 15px;
+      color: var(--color-principal);
+      animation: girar 1.5s linear infinite; /* Reutilizo animación si está definida */
+    }
+    @keyframes girar { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .contenedor-carrito { min-height: 50vh; /* Para que no se vea vacío al cargar */ }
+
+    /* Estilos para los items cargados por JS */
+    .tabla-carrito tbody tr { animation: fadeIn 0.5s ease forwards; opacity: 0; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .tabla-carrito td img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; }
+    .tabla-carrito .item-info { text-align: left; }
+    .tabla-carrito .item-nombre { font-weight: 600; color: var(--color-principal); display: block; margin-bottom: 3px;}
+    .tabla-carrito .item-precio-unitario { font-size: 0.9rem; color: #6c757d; }
+
+    .cantidad-controles { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .cantidad-controles button {
+        background-color: #e9ecef; border: none; width: 30px; height: 30px; border-radius: 50%;
+        font-weight: bold; cursor: pointer; transition: background-color 0.2s; color: var(--color-texto);
+    }
+     .cantidad-controles button:hover { background-color: #ced4da; }
+     .cantidad-input {
+         width: 50px; text-align: center; border: 1px solid #ced4da; border-radius: 5px; padding: 5px;
+         /* Oculto las flechas por defecto del input number */
+         -moz-appearance: textfield;
+     }
+      .cantidad-input::-webkit-outer-spin-button,
+      .cantidad-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+     .item-subtotal { font-weight: 600; }
+
+     .btn-eliminar { background-color: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+     .btn-eliminar:hover { background-color: #c82333; }
+
+     .resumen-carrito { margin-top: 30px; padding-top: 20px; border-top: 1px solid #dee2e6; text-align: right; }
+     .resumen-carrito h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--color-principal); }
+     .btn-proceder-pago {
+         background-color: var(--color-dorado); color: var(--color-principal); font-weight: bold; padding: 12px 30px;
+         border: none; border-radius: 30px; cursor: pointer; transition: background-color 0.2s, transform 0.2s;
+         font-size: 1.1rem;
+     }
+      .btn-proceder-pago:hover { background-color: #a87d3a; transform: translateY(-2px); }
+      .btn-proceder-pago:disabled { background-color: #cccccc; cursor: not-allowed; transform: none; }
+
+  </style>
 </head>
 <body>
-  <main class="contenedor-carrito">
-    <h1>Tu Carrito</h1>
-    
-    {% if productos %}
-    <table class="tabla-carrito">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for producto in productos %}
-        <tr data-id="{{ producto.id }}">
-          <td>{{ producto.nombre }}</td>
-          <td>${{ producto.precio }}</td>
-          <td>
-            <input type="number" value="{{ producto.cantidad }}" min="1" class="cantidad-input">
-          </td>
-          <td>${{ producto.subtotal }}</td>
-          <td>
-            <button class="btn-eliminar">Eliminar</button>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <div class="total-carrito">
-      <h2>Total: ${{ total }}</h2>
-      <button class="btn-pagar">Proceder al pago</button>
+  {# Incluyo el encabezado común si es necesario #}
+  <div class="barra-superior">
+    <div class="contenedor">
+      <div class="contacto-info">
+        <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
+        <a href="mailto:mechartesanal@gmail.com"><i class="fas fa-envelope"></i> mechartesanal@gmail.com</a>
+      </div>
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
+        {# Enlace a login o dashboard según el estado #}
+        {% if user.is_authenticated %}
+           <a href="{% url 'dashboard' %}"><i class="fas fa-user-circle"></i> Mi Cuenta</a>
+        {% else %}
+           <a href="{% url 'login' %}"><i class="fas fa-user"></i> Login</a>
+        {% endif %}
+      </div>
     </div>
-    {% else %}
-      <p>Tu carrito está vacío.</p>
-    {% endif %}
+  </div>
+
+  <header class="encabezado">
+    <div class="contenedor">
+      <div class="logo">
+        <a href="{% url 'pgbienvenida' %}">
+           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
+        </a>
+      </div>
+      <nav class="navegacion">
+        <ul>
+          <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
+          <li><a href="{% url 'tienda' %}">Tienda</a></li>
+          <li><a href="{% url 'nosotros' %}">¿Quiénes Somos?</a></li>
+          <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
+        </ul>
+      </nav>
+      {# El icono del carrito aquí puede mostrar el contador total también #}
+       <div class="carrito">
+        <a href="{% url 'carrito' %}">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="contador-carrito" id="contador-carrito-icon-header">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  {# Contenedor principal donde se cargará el carrito #}
+  <main class="contenedor-carrito">
+    <h1>Tu Carrito de Compras</h1>
+
+    {# Placeholder para el contenido del carrito que cargará JS #}
+    <div id="carrito-contenido">
+      <div class="cargando-carrito">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Cargando tu carrito...</p>
+      </div>
+      {# JS reemplazará esto con la tabla o el mensaje de carrito vacío #}
+    </div>
+
+    {# Placeholder para el resumen y botón de pago #}
+    <div id="carrito-resumen">
+      {# JS llenará esto si el carrito no está vacío #}
+    </div>
+
   </main>
 
+  {# Incluyo el pie de página  #}
+  <footer class="pie-pagina">
+     
+        <div class="contenedor">
+         <div class="derechos">
+            <p>&copy; {% now "Y" %} Mech Artesanal. Todos los derechos reservados.</p>
+          </div>
+      </div>
+  </footer>
+
+  
   <script src="{% static 'Archivos-Js/carrito.js' %}"></script>
 </body>
 </html>
-
