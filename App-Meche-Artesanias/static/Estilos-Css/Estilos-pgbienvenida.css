@@ -162,7 +162,7 @@ button {
     align-items: center;
 }
 
-/* Dar un poco más de separación y estilo a la información de contacto */
+/*  información de contacto */
 .contacto-info a {
     margin-right: 25px;
     font-weight: 500;
@@ -361,6 +361,39 @@ button {
     color: var(--color-secundario);
     padding: 0 15px 15px;
 }
+
+.producto-acciones {
+    display: flex;      
+    align-items: center; 
+    gap: 10px;         
+    padding: 0 15px 15px; 
+    margin-top: 10px;     
+}
+
+.producto-acciones input[type="number"] {
+    width: 60px; 
+    padding: 8px;  
+    text-align: center;  
+    border: 1px solid #ccc;
+    border-radius: 5px;  
+    font-size: 1rem;     
+}
+
+.producto-acciones input[type="number"]::-webkit-outer-spin-button,
+.producto-acciones input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Ajusta el botón para que funcione bien en flex */
+.producto-acciones .btn-secundario {
+     flex-grow: 1; 
+     margin: 0;
+}
+
+
+
+
 
 .btn-secundario {
     display: block;

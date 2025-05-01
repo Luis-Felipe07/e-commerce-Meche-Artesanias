@@ -5,16 +5,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mech Artesanal - Mi Cuenta</title>
-  <!-- Hojas de estilos -->
   <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard.css' %}">
   <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard-2.css' %}">
   <link rel="stylesheet" href="{% static 'Estilos-Css/dashboard-spa.css' %}">
-  <!-- Font Awesome para iconos -->
+  {# Añado estilos específicos para el carrito en el dashboard #}
+  <style>
+    #seccion-carrito-dashboard .lista-carrito-items {
+        max-height: 400px; /* Limito altura para scroll si hay muchos items */
+        overflow-y: auto;
+        margin-bottom: 20px;
+        border: 1px solid var(--color-gris-claro);
+        border-radius: 8px;
+    }
+    #seccion-carrito-dashboard .carrito-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        gap: 15px;
+        border-bottom: 1px solid var(--color-gris-claro);
+    }
+     #seccion-carrito-dashboard .carrito-item:last-child {
+        border-bottom: none;
+    }
+    #seccion-carrito-dashboard .carrito-item-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    #seccion-carrito-dashboard .carrito-item-info {
+        flex-grow: 1;
+    }
+    #seccion-carrito-dashboard .carrito-item-nombre {
+        font-weight: 600;
+        color: var(--color-principal);
+        margin-bottom: 3px;
+    }
+    #seccion-carrito-dashboard .carrito-item-meta {
+        font-size: 0.9rem;
+        color: #666;
+    }
+     #seccion-carrito-dashboard .carrito-total {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--color-principal);
+     }
+     #seccion-carrito-dashboard .carrito-vacio {
+         text-align: center;
+         padding: 40px;
+         color: #777;
+     }
+     #seccion-carrito-dashboard .btn-ver-carrito-completo {
+         display: inline-block; /* Para que el margen funcione */
+         margin-top: 15px;
+     }
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- Barra superior con la información de contacto y redes sociales -->
-  <div class="barra-superior">
+  {# ... (barra-superior, encabezado sin cambios) ... #}
+   <div class="barra-superior">
     <div class="contenedor">
       <div class="contacto-info">
         <a href="tel:+573112083383"><i class="fas fa-phone"></i> +57 311 320 8383</a>
@@ -24,12 +76,17 @@
         <a href="https://www.facebook.com/profile.php?id=100017948161298" target="_blank"><i class="fab fa-facebook"></i></a>
         <a href="https://www.instagram.com/meche_artesanias/" target="_blank"><i class="fab fa-instagram"></i></a>
         <div class="usuario-menu">
-          <a href="#" id="menuUsuario"><i class="fas fa-user-circle"></i> <span id="nombreUsuario"></span></a>
+          {# El nombre de usuario se cargará con JS #}
+          
+          <a href="#" id="menuUsuario"><i class="fas fa-user-circle"></i></a>
           <div class="dropdown-menu">
             <a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Mi Panel</a>
+            {# Añado enlace a la sección del carrito #}
+            <a href="#carrito-dashboard" data-section="carrito-dashboard"><i class="fas fa-shopping-cart"></i> Mi Carrito</a>
             <a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Editar Perfil</a>
             <a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a>
             <a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a>
+            {# <a href="#pagos" data-section="pagos"><i class="fas fa-credit-card"></i> Métodos Pago</a> #} {# Comento pagos si no está implementado #}
             <a href="#" id="cerrarSesion"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
           </div>
         </div>
@@ -37,18 +94,17 @@
     </div>
   </div>
 
-  <!-- Encabezado con logo, buscador y navegación -->
   <header class="encabezado">
     <div class="contenedor">
       <div class="logo">
-        <a href="index-pgbienvenida.html">
-          <img src="{% static 'Img/logo.jpeg' %}" alt="Mech Artesanal Logo">
+        <a href="{% url 'pgbienvenida' %}">
+           <img src="{% static 'Img/logo.png' %}" alt="Mech Artesanal Logo">
         </a>
       </div>
       <div class="buscador">
-        <form action="#" method="get">
-          <input type="text" placeholder="Buscar">
-          <button type="button" id="cerrarBusqueda" class="btn-cerrar">&times;</button>
+        <form action="{% url 'buscar_productos' %}" method="get"> {# Apunto al buscador #}
+          <input type="text" name="q" placeholder="Buscar mochilas...">
+          <button type="submit" style="background:none; border:none; position:absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--color-principal);"><i class="fas fa-search"></i></button>
         </form>
       </div>
       <nav class="navegacion">
@@ -56,118 +112,401 @@
           <li><a href="{% url 'pgbienvenida' %}">Inicio</a></li>
           <li><a href="{% url 'tienda' %}">Tienda</a></li>
           <li><a href="{% url 'nosotros' %}">¿Quiénes Somos?</a></li>
-          <li><a href="{% url 'pgbienvenida' %}">Contáctanos</a></li>
+          <li><a href="{% url 'contacto' %}">Contáctanos</a></li>
         </ul>
       </nav>
       <div class="carrito">
-        <a href="carrito.html">
+         {# Enlace a la página completa del carrito #}
+        <a href="{% url 'carrito' %}">
           <i class="fas fa-shopping-cart"></i>
-          <span class="contador-carrito">0</span>
+           {# El contador se carga con JS #}
+          <span class="contador-carrito" id="contador-carrito-icon">0</span>
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Panel principal del cliente -->
   <main class="panel-cliente">
     <div class="contenedor">
       <div class="bienvenida-cliente">
+        {# El nombre se carga con JS #}
         <h1>Bienvenido/a, <span id="nombreClientePanel">Usuario</span></h1>
-        <p>Este es tu panel personal donde puedes administrar tus pedidos y datos.</p>
+        <p>Este es tu panel personal donde puedes administrar tus pedidos, datos y carrito.</p>
       </div>
 
-      <!-- Sección de resumen y opciones rápidas -->
       <div class="dashboard-cliente">
-        <!-- Panel lateral con menú de navegación -->
         <aside class="menu-lateral">
           <div class="foto-perfil">
-            <img id="imgPerfilUsuario" src="{% static 'Img/usuario-default.jpg' %}" alt="Foto de perfil">
+             {# La imagen y datos se cargan con JS #}
+             <img id="imgPerfilUsuario" src="{% static 'Img/usuario-default.jpg' %}" alt="Foto de perfil">
             <h3 id="nombrePerfilUsuario">Usuario</h3>
             <p id="emailUsuario">usuario@ejemplo.com</p>
           </div>
           <nav class="menu-cliente">
             <ul>
               <li class="activo"><a href="#dashboard" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Panel Principal</a></li>
+              {# Añado enlace al carrito en el menú lateral #}
+               <li ><a href="#carrito-dashboard" data-section="carrito-dashboard"><i class="fas fa-shopping-cart"></i> Mi Carrito</a></li>
               <li><a href="#perfil" data-section="perfil"><i class="fas fa-user-edit"></i> Mi Perfil</a></li>
               <li><a href="#pedidos" data-section="pedidos"><i class="fas fa-shopping-bag"></i> Mis Pedidos</a></li>
               <li><a href="#direcciones" data-section="direcciones"><i class="fas fa-map-marker-alt"></i> Mis Direcciones</a></li>
+              {# <li><a href="#pagos" data-section="pagos"><i class="fas fa-credit-card"></i> Métodos Pago</a></li> #}
               <li><a href="#" id="cerrarSesionMenu"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
             </ul>
           </nav>
         </aside>
 
-        <!-- Contenido principal del dashboard -->
         <div class="contenido-dashboard">
           <div id="cargando-seccion" class="oculto">
             <div class="spinner-carga"><i class="fas fa-spinner fa-spin"></i></div>
             <p>Cargando contenido...</p>
           </div>
+
           <div id="seccion-contenido">
-            <!-- Dashboard -->
+            {# --- Sección Dashboard (sin cambios estructurales) --- #}
             <div id="seccion-dashboard" class="seccion-panel active">
-              <div class="tarjetas-resumen">
-                <div class="tarjeta">
-                  <div class="icono-tarjeta"><i class="fas fa-shopping-bag"></i></div>
-                  <div class="info-tarjeta">
-                    <h3>Pedidos</h3>
-                    <p id="totalPedidos">0</p>
-                    <a href="#pedidos" data-section="pedidos">Ver todos</a>
+               {# ... (tarjetas resumen, últimos pedidos, recomendados) ... #}
+                 <div class="tarjetas-resumen">
+                    <div class="tarjeta">
+                      <div class="icono-tarjeta"><i class="fas fa-shopping-cart"></i></div> {# Icono Carrito #}
+                      <div class="info-tarjeta">
+                        <h3>Carrito Actual</h3>
+                        <p id="totalItemsCarritoDash">0 Items</p> {# Se actualiza con JS #}
+                        <a href="#carrito-dashboard" data-section="carrito-dashboard">Ver Carrito</a>
+                      </div>
+                    </div>
+                    <div class="tarjeta">
+                      <div class="icono-tarjeta"><i class="fas fa-shopping-bag"></i></div>
+                      <div class="info-tarjeta">
+                        <h3>Pedidos</h3>
+                        <p id="totalPedidos">0</p>
+                        <a href="#pedidos" data-section="pedidos">Ver todos</a>
+                      </div>
+                    </div>
+                    <div class="tarjeta">
+                      <div class="icono-tarjeta"><i class="fas fa-map-marker-alt"></i></div>
+                      <div class="info-tarjeta">
+                        <h3>Direcciones</h3>
+                        <p id="totalDirecciones">0</p>
+                        <a href="#direcciones" data-section="direcciones">Administrar</a>
+                      </div>
+                    </div>
+                    {# Podría añadir tarjeta de Métodos de Pago si está activa #}
                   </div>
-                </div>
-                <div class="tarjeta">
-                  <div class="icono-tarjeta"><i class="fas fa-map-marker-alt"></i></div>
-                  <div class="info-tarjeta">
-                    <h3>Direcciones</h3>
-                    <p id="totalDirecciones">0</p>
-                    <a href="#direcciones" data-section="direcciones">Administrar</a>
+                   <div class="ultimos-pedidos">
+                    <div class="encabezado-seccion">
+                      <h2>Últimos Pedidos</h2>
+                      <a href="#pedidos" data-section="pedidos" class="ver-todos">Ver todos</a>
+                    </div>
+                    <div class="tabla-responsive">
+                      <table class="tabla-pedidos">
+                        <thead>
+                          <tr><th>#ID</th><th>Fecha</th><th>Estado</th><th>Total</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody id="tablaPedidosRecientes">
+                          <tr><td colspan="5" class="sin-datos">Cargando pedidos recientes...</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                </div>
-                <div class="tarjeta">
-                  <div class="icono-tarjeta"><i class="fas fa-credit-card"></i></div>
-                  <div class="info-tarjeta">
-                    <h3>Métodos de Pago</h3>
-                    <p id="totalMetodosPago">0</p>
-                    <a href="#pagos" data-section="pagos">Administrar</a>
+                  <div class="productos-recomendados">
+                    <div class="encabezado-seccion">
+                      <h2>Productos Recomendados</h2>
+                      <a href="{% url 'tienda' %}" class="ver-todos">Ver tienda</a>
+                    </div>
+                    <div class="recomendados-slider" id="productosRecomendados">
+                      {# Productos se cargarán con JS si es necesario #}
+                    </div>
                   </div>
-                </div>
+            </div>
+
+            {# --- NUEVA SECCIÓN PARA MOSTRAR EL CARRITO --- #}
+            <div id="seccion-carrito-dashboard" class="seccion-panel">
+              <div class="seccion-header">
+                <h2><i class="fas fa-shopping-cart"></i> Mi Carrito de Compras</h2>
               </div>
-              <div class="ultimos-pedidos">
-                <div class="encabezado-seccion">
-                  <h2>Últimos Pedidos</h2>
-                  <a href="#pedidos" class="ver-todos'>Ver todos</a>
-                </div>
-                <div class="tabla-responsive">
-                  <table class="tabla-pedidos">
-                    <thead>
-                      <tr><th>#ID</th><th>Fecha</th><th>Estado</th><th>Total</th><th>Acciones</th></tr>
-                    </thead>
-                    <tbody id="tablaPedidosRecientes">
-                      <tr><td colspan="5" class="sin-datos">Cargando pedidos recientes...</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="productos-recomendados">
-                <div class="encabezado-seccion">
-                  <h2>Productos Recomendados</h2>
-                  <a href="tienda.html" class="ver-todos">Ver tienda</a>
-                </div>
-                <div class="recomendados-slider" id="productosRecomendados">
-                  <div class="recomendado-card">
-                    <img src="{% static 'Img/img-tienda/mochila-fique1.jpg' %}" alt="Mochila Recomendada 1">
-                    <h3>Cargando productos...</h3>
-                    <p>$--.--</p>
-                    <button class="btn-secundario">Agregar al carrito</button>
-                  </div>
-                </div>
+              <div class="seccion-contenido">
+                 {# Contenedor donde JS insertará los items del carrito #}
+                 <div id="carrito-dashboard-items">
+                     <div class="cargando-datos">
+                         <i class="fas fa-spinner fa-spin"></i>
+                         <p>Cargando tu carrito...</p>
+                     </div>
+                     {# JS reemplazará esto con los items o un mensaje de vacío #}
+                 </div>
+                 {# Contenedor para el total y botón #}
+                 <div id="carrito-dashboard-resumen" style="display: none;"> {# Oculto inicialmente #}
+                     <div class="carrito-total" id="carrito-dashboard-total">
+                         Total: $0.00
+                     </div>
+                     <a href="{% url 'carrito' %}" class="btn-primario btn-ver-carrito-completo">
+                        <i class="fas fa-shopping-basket"></i> Ver Carrito y Pagar
+                     </a>
+                 </div>
               </div>
             </div>
-            <!-- resto del HTML continúa igual, reemplazando solo rutas con {% static %} -->
+
+            {# --- Sección Mi Perfil (sin cambios estructurales) --- #}
+            <div id="seccion-perfil" class="seccion-panel">
+               {# ... (contenido del perfil) ... #}
+                 <div class="seccion-header">
+                    <h2><i class="fas fa-user-edit"></i> Mi Perfil</h2>
+                  </div>
+                  <div class="seccion-contenido">
+                    <div class="editar-perfil-form">
+                      <div class="perfil-foto-upload">
+                        <div class="foto-actual">
+                          <img id="perfilFotoActual" src="{% static 'Img/usuario-default.jpg' %}" alt="Foto de perfil">
+                        </div>
+                        <div class="cambiar-foto">
+                          <button type="button" class="btn-cambiar-foto">Cambiar foto</button>
+                          <input type="file" id="inputFotoPerfil" accept="image/*" style="display: none;">
+                        </div>
+                      </div>
+                      <form id="formEditarPerfil">
+                        <div class="form-grupo">
+                          <label for="nombreCompleto">Nombre Completo</label>
+                          <input type="text" id="nombreCompleto" name="nombreCompleto" placeholder="Tu nombre completo">
+                        </div>
+                        <div class="form-grupo">
+                          <label for="emailPerfil">Correo Electrónico (no editable)</label>
+                          <input type="email" id="emailPerfil" name="email" placeholder="correo@ejemplo.com" readonly>
+                        </div>
+                        <div class="form-grupo">
+                           <label for="tipoDocumentoPerfil">Tipo Documento</label>
+                           <input type="text" id="tipoDocumentoPerfil" name="tipo_documento" readonly>
+                        </div>
+                         <div class="form-grupo">
+                           <label for="numeroDocumentoPerfil">Número Documento</label>
+                           <input type="text" id="numeroDocumentoPerfil" name="numero_documento" readonly>
+                        </div>
+                        <div class="form-grupo">
+                          <label for="telefonoPerfil">Teléfono</label>
+                          <input type="tel" id="telefonoPerfil" name="telefono" placeholder="Número de teléfono">
+                        </div>
+                         <div class="form-grupo">
+                            <label for="biografiaPerfil">Biografía</label>
+                            <textarea id="biografiaPerfil" name="biografia" rows="3" placeholder="Cuéntanos un poco sobre ti..."></textarea>
+                        </div>
+                        <div class="form-grupo">
+                          <button type="submit" class="btn-primario">Guardar Cambios</button>
+                        </div>
+                      </form>
+                      <div class="cambiar-contrasena">
+                        <h3>Cambiar Contraseña</h3>
+                        <form id="formCambiarContrasena">
+                          {# ... campos de contraseña ... #}
+                           <div class="form-grupo">
+                            <label for="contrasenaActual">Contraseña Actual</label>
+                            <input type="password" id="contrasenaActual" name="contrasenaActual">
+                          </div>
+                          <div class="form-grupo">
+                            <label for="nuevaContrasena">Nueva Contraseña</label>
+                            <input type="password" id="nuevaContrasena" name="nuevaContrasena">
+                          </div>
+                          <div class="form-grupo">
+                            <label for="confirmarContrasena">Confirmar Contraseña</label>
+                            <input type="password" id="confirmarContrasena" name="confirmarContrasena">
+                          </div>
+                          <div class="form-grupo">
+                            <button type="submit" class="btn-secundario">Cambiar Contraseña</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            {# --- Sección Mis Pedidos (sin cambios estructurales) --- #}
+            <div id="seccion-pedidos" class="seccion-panel">
+               {# ... (contenido de pedidos) ... #}
+                <div class="seccion-header">
+                     <h2><i class="fas fa-shopping-bag"></i> Mis Pedidos</h2>
+                  </div>
+                  <div class="seccion-contenido">
+                     <div class="filtros-pedidos">
+                       <div class="campo-busqueda">
+                           <form id="formBuscarPedido"> <input type="text" id="buscarPedidoInput" placeholder="Buscar por número de pedido">
+                               <button type="submit"><i class="fas fa-search"></i></button>
+                           </form>
+                       </div>
+                       <div class="selector-estado">
+                         <select id="filtroEstadoPedido">
+                           <option value="todos">Todos los estados</option>
+                           <option value="pendiente">Pendiente</option>
+                           <option value="procesando">Procesando</option> {# Añadir si es relevante #}
+                           <option value="enviado">Enviado</option>
+                           <option value="completado">Completado</option>
+                           <option value="cancelado">Cancelado</option>
+                         </select>
+                       </div>
+                     </div>
+                     <div class="tabla-responsive">
+                       <table class="tabla-pedidos">
+                         <thead>
+                           <tr>
+                             <th>#ID</th><th>Fecha</th><th>Estado</th><th>Total</th><th>Acciones</th>
+                           </tr>
+                         </thead>
+                         <tbody id="tablaTodosPedidos">
+                           <tr><td colspan="5" class="sin-datos">Cargando pedidos...</td></tr>
+                         </tbody>
+                       </table>
+                     </div>
+                     <div class="paginacion">
+                       <button class="btn-pagina" id="paginaAnterior" disabled><i class="fas fa-chevron-left"></i></button>
+                       <span id="paginaActual">Página 1 de 1</span>
+                       <button class="btn-pagina" id="paginaSiguiente" disabled><i class="fas fa-chevron-right"></i></button>
+                     </div>
+                  </div>
+            </div>
+
+            {# --- Sección Mis Direcciones (sin cambios estructurales) --- #}
+            <div id="seccion-direcciones" class="seccion-panel">
+                {# ... (contenido de direcciones) ... #}
+                 <div class="seccion-header">
+                     <h2><i class="fas fa-map-marker-alt"></i> Mis Direcciones</h2>
+                     <button id="agregarDireccion" class="btn-primario"><i class="fas fa-plus"></i> Agregar Dirección</button>
+                   </div>
+                   <div class="seccion-contenido">
+                     <div id="listaDirecciones" class="tarjetas-direcciones">
+                       <div class="cargando-datos">
+                         <i class="fas fa-spinner fa-spin"></i>
+                         <p>Cargando direcciones...</p>
+                       </div>
+                       {# Las tarjetas se cargarán con JS #}
+                     </div>
+                   </div>
+            </div>
+
+            {# --- Sección Métodos de Pago (comentada si no está lista) --- #}
+            {#
+            <div id="seccion-pagos" class="seccion-panel">
+               <div class="seccion-header">
+                 <h2><i class="fas fa-credit-card"></i> Métodos de Pago</h2>
+                 <button id="agregarMetodoPago" class="btn-primario"><i class="fas fa-plus"></i> Agregar Método</button>
+               </div>
+               <div class="seccion-contenido">
+                 <div id="listaMetodosPago" class="tarjetas-pagos">
+                    <div class="cargando-datos">
+                      <i class="fas fa-spinner fa-spin"></i>
+                      <p>Cargando métodos de pago...</p>
+                    </div>
+                 </div>
+               </div>
+            </div>
+            #}
+
+          </div> {# Fin de seccion-contenido #}
+        </div> {# Fin de contenido-dashboard #}
+      </div> {# Fin de dashboard-cliente #}
+    </div> {# Fin de contenedor #}
+  </main>
+
+  {# --- Modales (sin cambios estructurales, pero asegúrate que los IDs coinciden con JS) --- #}
+  <div id="modalDireccion" class="modal">
+    {# ... (contenido modal dirección) ... #}
+      <div class="modal-contenido">
+        <div class="modal-header">
+          <h3 class="modal-titulo">Agregar Nueva Dirección</h3> <button type="button" class="cerrar-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="formDireccion">
+             <input type="hidden" name="id_direccion"> <div class="form-grupo">
+                  <label for="direccion_calle">Dirección (Calle, Número, Apto)</label>
+                  <input type="text" id="direccion_calle" name="direccion" required>
+              </div>
+               <div class="form-grupo doble">
+                   <div>
+                       <label for="direccion_ciudad">Ciudad</label>
+                       <input type="text" id="direccion_ciudad" name="ciudad" required>
+                   </div>
+                   <div>
+                       <label for="direccion_estado">Departamento/Estado</label>
+                       <input type="text" id="direccion_estado" name="estado" required>
+                   </div>
+               </div>
+               <div class="form-grupo doble">
+                    <div>
+                       <label for="direccion_cp">Código Postal</label>
+                       <input type="text" id="direccion_cp" name="codigo_postal">
+                   </div>
+                   <div>
+                       <label for="direccion_pais">País</label>
+                       <input type="text" id="direccion_pais" name="pais" value="Colombia" required>
+                   </div>
+               </div>
+               <div class="form-grupo">
+                   <label for="direccion_telefono">Teléfono de Contacto</label>
+                   <input type="tel" id="direccion_telefono" name="telefono">
+               </div>
+               <div class="form-grupo checkbox-grupo">
+                   <input type="checkbox" id="direccion_predeterminada_check" name="predeterminada">
+                   <label for="direccion_predeterminada_check">Establecer como predeterminada</label>
+               </div>
+               <div class="form-grupo">
+                  <button type="submit" class="btn-primario">Guardar Dirección</button>
+               </div>
+          </form>
+        </div>
+      </div>
+  </div>
+  <div id="modalMetodoPago" class="modal">
+    {# ... (contenido modal método pago) ... #}
+      <div class="modal-contenido">
+        <div class="modal-header">
+           <h3 class="modal-titulo">Agregar Método de Pago</h3>
+           <button type="button" class="cerrar-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+           <form id="formMetodoPago">
+                {# Simplifico, asumiendo que no guardas datos de tarjeta reales #}
+                <p>Actualmente no guardamos métodos de pago.</p>
+                {#
+               <div class="form-grupo">
+                   <label for="pago_tipo">Tipo de Tarjeta</label>
+                   <select id="pago_tipo" name="tipo_tarjeta" required>...</select>
+               </div>
+               ... otros campos de tarjeta ...
+                #}
+               {# <button type="submit" class="btn-primario">Guardar Método</button> #}
+           </form>
+        </div>
+      </div>
+  </div>
+   <div id="modalDetallePedido" class="modal">
+     {# ... (contenido modal detalle pedido) ... #}
+       <div class="modal-contenido modal-grande">
+      <div class="modal-header">
+        <h3>Detalle de Pedido #<span id="detallePedidoId">...</span></h3>
+        <button type="button" class="cerrar-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="contenidoDetallePedido">
+          <div class="cargando-datos">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Cargando detalles...</p>
           </div>
+          {# El contenido detallado se cargará aquí con JS #}
         </div>
       </div>
     </div>
-  </main>
-  <script src="{% static 'Archivos-Js/dashboard-spa.js' %}"></script>
+   </div>
+
+  {# Contenedor para notificaciones toast #}
+  <div id="contenedor-notificaciones"></div>
+
+  <footer class="pie-pagina">
+      {# ... (contenido del pie de página) ... #}
+        <div class="contenedor">
+         <div class="derechos">
+            <p>&copy; {% now "Y" %} Mech Artesanal. Todos los derechos reservados.</p>
+          </div>
+      </div>
+  </footer>
+
+  {# Importante: Cargar el JS del dashboard al final #}
+  <script src="{% static 'Archivos-Js/dashboard.js' %}"></script>
+  <script src="{% static 'archivos-JS/verificar-autenticacion.js' %}"></script><!-- Incluir el script de verificación -->
 </body>
 </html>

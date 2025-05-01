@@ -9,12 +9,11 @@
 <body>
   <div class="login-container">
     <h2>Iniciar Sesión</h2>
-    <form id="loginForm" method="POST">
-      {% csrf_token %}
+    <form id="loginForm">
       <input type="text" id="usuario" name="username" placeholder="Usuario" required>
       <input type="password" id="clave" name="password" placeholder="Contraseña" required>
       <button type="submit">Acceder</button>
-      <p id="mensajeError" class="error">{{ error_message }}</p>
+      <p id="mensajeError" class="error"></p>
     </form>
   </div>
 
