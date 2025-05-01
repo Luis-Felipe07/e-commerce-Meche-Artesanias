@@ -1,0 +1,1 @@
+web: gunicorn Meche_artesanias_backend.wsgi:application
