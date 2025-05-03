@@ -13,10 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h!_^=6!9vc2xdr93m9+793x60$pv!874_a$x+h7t@)+7$3d4@k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['e-commerce-meche-artesanias.onrender.com',
-                ]
+ALLOWED_HOSTS = [
+    'e-commerce-meche-artesanias.onrender.com',
+    'localhost',  # Para desarrollo local
+    '127.0.0.1',  # Para desarrollo local
+]
 
 
 # Application definition
