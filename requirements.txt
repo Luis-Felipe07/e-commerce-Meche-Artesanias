@@ -2,3 +2,4 @@ django
 gunicorn
 psycopg2-binary
 djangorestframework
+django-grappelli
