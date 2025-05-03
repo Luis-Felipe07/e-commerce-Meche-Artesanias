@@ -3,3 +3,5 @@ gunicorn
 psycopg2-binary
 djangorestframework
 django-grappelli
+django-cors-headers
+
